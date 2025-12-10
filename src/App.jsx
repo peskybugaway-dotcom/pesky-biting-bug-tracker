@@ -6,6 +6,11 @@ import MapView from "./components/MapView";
 import BugEncyclopedia from "./components/BugEncyclopedia";
 import BottomNav from "./components/BottomNav";
 import { Bug } from "lucide-react";
+import BugDetail from "./components/BugDetail";
+
+
+Add this to your imports:
+import BugDetail from "./components/BugDetail";
 
 export default function App() {
   const [tab, setTab] = useState("dashboard");
@@ -35,22 +40,40 @@ export default function App() {
     night: "from-indigo-700/40 to-slate-900/40 border-indigo-400",
   };
 
-  const renderScreen = () => {
-    switch (tab) {
-      case "dashboard":
-        return <Dashboard />;
-      case "guide":
-        return <Guide />;
-      case "protection":
-        return <Protection />;
-      case "map":
-        return <MapView />;
-        case "bugs":
-  return <BugEncyclopedia />;
-      default:
-        return <Dashboard />;
-    }
-  };
+ const renderScreen = () => {
+  // If a bug is selected, ALWAYS show BugDetail
+  if (selectedBug) {
+    return (
+      <BugDetail
+        bug={selectedBug}
+        back={() => setSelectedBug(null)}
+      />
+    );
+  }
+
+  // Otherwise use normal navigation
+  switch (tab) {
+    case "dashboard":
+      return <Dashboard />;
+    case "guide":
+      return <Guide />;
+    case "protection":
+      return <Protection />;
+    case "map":
+      return <MapView />;
+    case "bugs":
+      return (
+        <BugEncyclopedia
+          onSelectBug={(bug) => {
+            setSelectedBug(bug);
+          }}
+        />
+      );
+    default:
+      return <Dashboard />;
+  }
+};
+
 
   return (
     <div className="min-h-screen pb-24">
