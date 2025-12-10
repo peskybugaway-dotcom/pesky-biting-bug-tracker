@@ -93,9 +93,25 @@ export default function MapView() {
         </svg>
       </div>
 
-      {/* LEGEND */}
+          {/* LEGEND */}
       <div className="flex justify-center gap-6 text-sm text-slate-300 pt-2">
-        <div className="flex items-center gap-2"><div className="w-3 h-3 bg-red-600"></div> Severe</div>
-        <div className="flex items-center gap-2"><div className="w-3 h-3 bg-orange-500"></div> High</div>
-        <div className="flex items-center gap-2"><div className="w-3 h-3 bg-yellow-500"></div> Moderate</div>
-        <div className="flex items-center gap-2"><div className=
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-red-600"></div> Severe
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-orange-500"></div> High
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-yellow-500"></div> Moderate
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-emerald-600"></div> Low
+        </div>
+      </div>
+    </div>
+  );
+}
+
