@@ -20,6 +20,7 @@ export default function BottomNav({ tab, setTab }) {
       {btn("guide", "Guide")}
       {btn("protection", "Protection")}
       {btn("map", "Map")}
+{btn("bugs", "Bugs")}
 
       <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent"></div>
     </div>
