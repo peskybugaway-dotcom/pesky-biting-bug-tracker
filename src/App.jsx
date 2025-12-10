@@ -13,7 +13,7 @@ export default function App() {
   const [selectedBug, setSelectedBug] = useState(null);
   const [timeMode, setTimeMode] = useState("day"); // sunrise | day | sunset | night
 
-  // 🌅 Determine sunrise/sunset phases based on local time
+  // Time-based header color
   useEffect(() => {
     function determineTimeMode() {
       const hour = new Date().getHours();
@@ -29,7 +29,6 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // 🎨 Header color presets
   const headerStyles = {
     sunrise: "from-orange-500/60 to-amber-500/40 border-amber-400",
     day: "from-emerald-600/40 to-sky-500/30 border-emerald-500",
@@ -37,16 +36,19 @@ export default function App() {
     night: "from-indigo-700/40 to-slate-900/40 border-indigo-400",
   };
 
-  // 🎛 Screen Routing
+  // Screen routing
   const renderScreen = () => {
-    // If a bug is selected, ALWAYS show BugDetail
+    // If user selected a bug → show detail page
     if (selectedBug) {
       return (
-        <BugDetail bug={selectedBug} back={() => setSelectedBug(null)} />
+        <BugDetail
+          bug={selectedBug}
+          back={() => setSelectedBug(null)}
+        />
       );
     }
 
-    // Otherwise normal navigation
+    // Otherwise show the selected tab
     switch (tab) {
       case "dashboard":
         return <Dashboard />;
@@ -75,7 +77,7 @@ export default function App() {
   return (
     <div className="min-h-screen pb-24">
 
-      {/* 🔥 Dynamic PESKY Header */}
+      {/* PESKY Dynamic Header */}
       <header
         className={`
           fixed top-0 left-0 w-full 
@@ -108,7 +110,7 @@ export default function App() {
         {renderScreen()}
       </div>
 
-      {/* Bottom Navigation */}
+      {/* Navigation */}
       <BottomNav tab={tab} setTab={setTab} />
     </div>
   );
