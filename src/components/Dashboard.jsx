@@ -84,8 +84,9 @@ export default function Dashboard() {
     return Math.max(0, Math.min(100, s));
   }, [temp, humidity, wind]);
 
-  return (
-    <div className="p-6 space-y-8">
+ return (
+  <div className="p-4 space-y-8 max-w-xl mx-auto">
+
 
       {/* HEADER */}
       <h1 className="text-3xl font-bold text-emerald-400">
