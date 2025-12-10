@@ -3,6 +3,7 @@ import Dashboard from "./components/Dashboard";
 import Guide from "./components/Guide";
 import Protection from "./components/Protection";
 import MapView from "./components/MapView";
+import BugEncyclopedia from "./components/BugEncyclopedia";
 import BottomNav from "./components/BottomNav";
 import { Bug } from "lucide-react";
 
