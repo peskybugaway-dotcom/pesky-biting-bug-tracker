@@ -6,6 +6,29 @@ export default function Dashboard() {
   const [humidity, setHumidity] = useState(70);
   const [wind, setWind] = useState(3);
 
+  // 🌍 Fetch weather for user's location
+async function fetchWeather(setTemp, setHumidity, setWind) {
+  try {
+    const position = await new Promise((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    );
+
+    const { latitude, longitude } = position.coords;
+
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    setTemp(Math.round(data.current.temperature_2m));
+    setHumidity(Math.round(data.current.relative_humidity_2m));
+    setWind(Math.round(data.current.wind_speed_10m));
+  } catch (err) {
+    console.error("Weather fetch failed:", err);
+    alert("Could not access weather or location.");
+  }
+}
+
   // 🌡️ REALISTIC RISK ENGINE
   const score = useMemo(() => {
     let s = 0;
@@ -34,6 +57,12 @@ export default function Dashboard() {
       <h1 className="text-3xl font-bold text-emerald-400">
         PESKY Biting Bug Tracker
       </h1>
+    <button
+      onClick={() => fetchWeather(setTemp, setHumidity, setWind)}
+      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-full text-white shadow-lg"
+    >
+      Use My Location
+    </button>
 
       {/* RISK GAUGE */}
       <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
