@@ -11,9 +11,9 @@ import { Bug } from "lucide-react";
 export default function App() {
   const [tab, setTab] = useState("dashboard");
   const [selectedBug, setSelectedBug] = useState(null);
-  const [timeMode, setTimeMode] = useState("day"); // sunrise | day | sunset | night
+  const [timeMode, setTimeMode] = useState("day");
 
-  // Time-based header color
+  // 🌅 Time of day logic
   useEffect(() => {
     function determineTimeMode() {
       const hour = new Date().getHours();
@@ -25,10 +25,11 @@ export default function App() {
     }
 
     determineTimeMode();
-    const timer = setInterval(determineTimeMode, 5 * 60 * 1000);
+    const timer = setInterval(determineTimeMode, 300000);
     return () => clearInterval(timer);
   }, []);
 
+  // 🎨 Header gradients
   const headerStyles = {
     sunrise: "from-orange-500/60 to-amber-500/40 border-amber-400",
     day: "from-emerald-600/40 to-sky-500/30 border-emerald-500",
@@ -36,19 +37,15 @@ export default function App() {
     night: "from-indigo-700/40 to-slate-900/40 border-indigo-400",
   };
 
-  // Screen routing
+  // 🎛 Screen routing
   const renderScreen = () => {
-    // If user selected a bug → show detail page
+    // Show bug detail view if selected
     if (selectedBug) {
       return (
-        <BugDetail
-          bug={selectedBug}
-          back={() => setSelectedBug(null)}
-        />
+        <BugDetail bug={selectedBug} back={() => setSelectedBug(null)} />
       );
     }
 
-    // Otherwise show the selected tab
     switch (tab) {
       case "dashboard":
         return <Dashboard />;
@@ -64,9 +61,7 @@ export default function App() {
 
       case "bugs":
         return (
-          <BugEncyclopedia
-            onSelectBug={(bug) => setSelectedBug(bug)}
-          />
+          <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />
         );
 
       default:
@@ -77,7 +72,7 @@ export default function App() {
   return (
     <div className="min-h-screen pb-24">
 
-      {/* PESKY Dynamic Header */}
+      {/* Header */}
       <header
         className={`
           fixed top-0 left-0 w-full 
@@ -105,12 +100,11 @@ export default function App() {
         </div>
       </header>
 
-      {/* Push UI below header */}
+      {/* Page content below header */}
       <div className="pt-24">
         {renderScreen()}
       </div>
 
-      {/* Navigation */}
       <BottomNav tab={tab} setTab={setTab} />
     </div>
   );
