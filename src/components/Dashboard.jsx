@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 import RiskGauge from "./RiskGauge";
-import PresetManager from "./PresetManager"; // FIXED: correct import path
+import PresetManager from "./PresetManager";
 
 export default function Dashboard() {
   const [temp, setTemp] = useState(82);
@@ -84,49 +84,50 @@ export default function Dashboard() {
     return Math.max(0, Math.min(100, s));
   }, [temp, humidity, wind]);
 
- return (
-  <div className="p-4 space-y-8 max-w-xl mx-auto">
-
+  return (
+    <div className="p-4 space-y-8 max-w-xl mx-auto">
 
       {/* HEADER */}
-     <div className="pesky-card p-4">
-  <h1 className="text-3xl font-bold text-emerald-400">
-    PESKY Biting Bug Tracker
-  </h1>
-</div>
+      <div className="pesky-card p-4">
+        <h1 className="text-3xl font-bold text-emerald-400">
+          PESKY Biting Bug Tracker
+        </h1>
+      </div>
 
-      {/* Weather Button */}
-      <button
-        onClick={() => fetchWeather(setTemp, setHumidity, setWind)}
-        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-full text-white shadow-lg"
-      >
-        Use My Location
-      </button>
-
-      {/* Preset Buttons */}
-      <div className="flex gap-3">
+      {/* WEATHER + PRESET BUTTONS */}
+      <div className="pesky-card p-4 space-y-4">
         <button
-          onClick={savePreset}
-          className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white shadow"
+          onClick={() => fetchWeather(setTemp, setHumidity, setWind)}
+          className="pesky-btn"
         >
-          Save Preset
+          Use My Location
         </button>
 
-        <button
-          onClick={() => setShowPresets(true)}
-          className="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow"
-        >
-          Load Preset
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={savePreset}
+            className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white shadow"
+          >
+            Save Preset
+          </button>
+
+          <button
+            onClick={() => setShowPresets(true)}
+            className="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow"
+          >
+            Load Preset
+          </button>
+        </div>
       </div>
 
       {/* RISK GAUGE */}
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+      <div className="pesky-card p-6">
         <RiskGauge score={score} />
       </div>
 
       {/* SLIDERS */}
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 space-y-6 shadow-xl">
+      <div className="pesky-card p-6 space-y-6">
+
         {/* Temperature */}
         <div>
           <label className="flex justify-between text-emerald-300 font-semibold mb-1">
@@ -174,9 +175,10 @@ export default function Dashboard() {
             className="w-full accent-purple-400"
           />
         </div>
+
       </div>
 
-      {/* PRESET MANAGER — PLACE AT END */}
+      {/* PRESET MANAGER */}
       {showPresets && (
         <PresetManager
           presets={presets}
@@ -185,6 +187,7 @@ export default function Dashboard() {
           close={() => setShowPresets(false)}
         />
       )}
+      
     </div>
   );
 }
