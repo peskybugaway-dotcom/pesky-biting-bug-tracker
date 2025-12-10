@@ -45,6 +45,8 @@ export default function App() {
         return <Protection />;
       case "map":
         return <MapView />;
+        case "bugs":
+  return <BugEncyclopedia />;
       default:
         return <Dashboard />;
     }
