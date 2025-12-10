@@ -1,10 +1,46 @@
 import React, { useState, useMemo } from "react";
 import RiskGauge from "./RiskGauge";
+import PresetManager from "./PresetManager";
 
 export default function Dashboard() {
   const [temp, setTemp] = useState(82);
   const [humidity, setHumidity] = useState(70);
   const [wind, setWind] = useState(3);
+
+  // Presets stored locally
+const [presets, setPresets] = useState(
+  JSON.parse(localStorage.getItem("pesky-presets") || "[]")
+);
+
+const [showPresets, setShowPresets] = useState(false);
+
+// Save a preset
+function savePreset() {
+  const name = prompt("Enter name for this location:");
+  if (!name) return;
+
+  const newPreset = { name, temp, humidity, wind };
+  const updated = [...presets, newPreset];
+
+  setPresets(updated);
+  localStorage.setItem("pesky-presets", JSON.stringify(updated));
+}
+
+// Load preset
+function loadPreset(index) {
+  const p = presets[index];
+  setTemp(p.temp);
+  setHumidity(p.humidity);
+  setWind(p.wind);
+  setShowPresets(false);
+}
+
+// Delete preset
+function deletePreset(index) {
+  const updated = presets.filter((_, i) => i !== index);
+  setPresets(updated);
+  localStorage.setItem("pesky-presets", JSON.stringify(updated));
+}
 
   // 🌍 Fetch weather for user's location
 async function fetchWeather(setTemp, setHumidity, setWind) {
@@ -63,6 +99,21 @@ async function fetchWeather(setTemp, setHumidity, setWind) {
     >
       Use My Location
     </button>
+<div className="flex gap-3">
+  <button
+    onClick={savePreset}
+    className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white shadow"
+  >
+    Save Preset
+  </button>
+
+  <button
+    onClick={() => setShowPresets(true)}
+    className="px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow"
+  >
+    Load Preset
+  </button>
+</div>
 
       {/* RISK GAUGE */}
       <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
@@ -120,6 +171,15 @@ async function fetchWeather(setTemp, setHumidity, setWind) {
           />
         </div>
       </div>
+  {showPresets && (
+  <PresetManager
+    presets={presets}
+    loadPreset={loadPreset}
+    deletePreset={deletePreset}
+    close={() => setShowPresets(false)}
+  />
+)}
+
     </div>
   );
 }
