@@ -89,9 +89,11 @@ export default function Dashboard() {
 
 
       {/* HEADER */}
-      <h1 className="text-3xl font-bold text-emerald-400">
-        PESKY Biting Bug Tracker
-      </h1>
+     <div className="pesky-card p-4">
+  <h1 className="text-3xl font-bold text-emerald-400">
+    PESKY Biting Bug Tracker
+  </h1>
+</div>
 
       {/* Weather Button */}
       <button
