@@ -9,7 +9,7 @@ export default function App() {
   const [tab, setTab] = useState("dashboard");
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-24 pt-4 px-4 max-w-xl mx-auto">
       {tab === "dashboard" && <Dashboard />}
       {tab === "guide" && <Guide />}
       {tab === "protection" && <Protection />}
@@ -19,3 +19,4 @@ export default function App() {
     </div>
   );
 }
+
