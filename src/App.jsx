@@ -4,14 +4,14 @@ import Guide from "./components/Guide";
 import Protection from "./components/Protection";
 import MapView from "./components/MapView";
 import BugEncyclopedia from "./components/BugEncyclopedia";
-import BottomNav from "./components/BottomNav";
 import BugDetail from "./components/BugDetail";
+import BottomNav from "./components/BottomNav";
 import { Bug } from "lucide-react";
 
 export default function App() {
   const [tab, setTab] = useState("dashboard");
-  const [selectedBug, setSelectedBug] = useState(null); // ✅ REQUIRED
-  const [timeMode, setTimeMode] = useState("day");
+  const [selectedBug, setSelectedBug] = useState(null);
+  const [timeMode, setTimeMode] = useState("day"); // sunrise | day | sunset | night
 
   // 🌅 Determine sunrise/sunset phases based on local time
   useEffect(() => {
@@ -37,33 +37,36 @@ export default function App() {
     night: "from-indigo-700/40 to-slate-900/40 border-indigo-400",
   };
 
-  // 🔥 Screen Router (with bug detail override)
+  // 🎛 Screen Routing
   const renderScreen = () => {
-    // Always show detail page when a bug is selected
+    // If a bug is selected, ALWAYS show BugDetail
     if (selectedBug) {
       return (
-        <BugDetail
-          bug={selectedBug}
-          back={() => setSelectedBug(null)}
-        />
+        <BugDetail bug={selectedBug} back={() => setSelectedBug(null)} />
       );
     }
 
+    // Otherwise normal navigation
     switch (tab) {
       case "dashboard":
         return <Dashboard />;
+
       case "guide":
         return <Guide />;
+
       case "protection":
         return <Protection />;
+
       case "map":
         return <MapView />;
+
       case "bugs":
         return (
           <BugEncyclopedia
             onSelectBug={(bug) => setSelectedBug(bug)}
           />
         );
+
       default:
         return <Dashboard />;
     }
@@ -71,6 +74,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen pb-24">
+
       {/* 🔥 Dynamic PESKY Header */}
       <header
         className={`
@@ -91,16 +95,18 @@ export default function App() {
             </h1>
             <p className="text-xs text-slate-200 -mt-1">
               {timeMode === "sunrise" && "Sunrise — early bug activity forming"}
-              {timeMode === "day" && "Daytime — moderate bug activity varies"}
-              {timeMode === "sunset" && "Sunset — peak insect activity rising"}
-              {timeMode === "night" && "Nighttime — no-see-ums most active"}
+              {timeMode === "day" && "Daytime — activity varies"}
+              {timeMode === "sunset" && "Sunset — peak insect activity"}
+              {timeMode === "night" && "Night — no-see-ums most active"}
             </p>
           </div>
         </div>
       </header>
 
       {/* Push UI below header */}
-      <div className="pt-24">{renderScreen()}</div>
+      <div className="pt-24">
+        {renderScreen()}
+      </div>
 
       {/* Bottom Navigation */}
       <BottomNav tab={tab} setTab={setTab} />
