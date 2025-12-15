@@ -1,6 +1,5 @@
 import { Bug, Mosquito, Skull, AlertTriangle } from "lucide-react";
 
-
 const BUGS = [
   // -----------------------------
   // MOSQUITOES
