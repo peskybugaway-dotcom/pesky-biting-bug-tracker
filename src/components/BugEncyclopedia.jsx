@@ -1,4 +1,5 @@
-import { Bug, Fly, Skull, AlertTriangle } from "lucide-react";
+import { Bug, Mosquito, Skull, AlertTriangle } from "lucide-react";
+
 
 const BUGS = [
   // -----------------------------
@@ -8,7 +9,7 @@ const BUGS = [
     name: "Aedes Aegypti (Yellow Fever Mosquito)",
     type: "Mosquito",
     danger: "Severe",
-    icon: <Fly className="w-6 h-6 text-red-400" />,
+   icon: <Mosquito className="w-6 h-6 text-red-400" />,
     image: "https://i.imgur.com/J1v7C3d.jpeg",
     description:
       "Aggressive day-biting mosquito. Transmits Dengue, Zika, and Yellow Fever. Prefers urban areas and small water containers."
@@ -17,7 +18,7 @@ const BUGS = [
     name: "Aedes Albopictus (Asian Tiger Mosquito)",
     type: "Mosquito",
     danger: "High",
-    icon: <Fly className="w-6 h-6 text-orange-400" />,
+   icon: <Mosquito className="w-6 h-6 text-red-400" />,
     image: "https://i.imgur.com/KdnWWs6.jpeg",
     description:
       "Very aggressive daytime biter. Known for targeting ankles and outdoor workers. Thrives in humidity."
@@ -26,7 +27,7 @@ const BUGS = [
     name: "Culex (House Mosquito)",
     type: "Mosquito",
     danger: "Moderate",
-    icon: <Fly className="w-6 h-6 text-emerald-400" />,
+    icon: <Mosquito className="w-6 h-6 text-red-400" />,
     image: "https://i.imgur.com/LZkSKdH.jpeg",
     description:
       "Active at dusk and night. Prefers standing water. Carrier of West Nile Virus."
