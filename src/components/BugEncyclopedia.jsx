@@ -1,4 +1,5 @@
-import React from "react";
+import { Bug, Fly, Skull, AlertTriangle } from "lucide-react";
+
 
 const BUGS = [
   // -----------------------------
