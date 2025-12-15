@@ -5,11 +5,14 @@
     "category": "Mosquitoes",
     "danger": "Severe",
     "riskLevel": 3,
-    "image": "https://i.imgur.com/J1v7C3d.jpeg",
+    "image": "/images/aedes-aegypti.jpg",
     "description": "Aggressive day-biting mosquito. Primary carrier of Dengue, Zika, and Yellow Fever.",
     "facts": ["Prefers biting humans over animals.", "Lays eggs in small water containers."],
-    "bitePhotos": ["https://i.imgur.com/vl7N5e6.jpeg"],
-    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
+    "bitePhotos": ["/images/aedes-aegypti-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1
+    },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -19,11 +22,14 @@
     "category": "Mosquitoes",
     "danger": "High",
     "riskLevel": 3,
-    "image": "https://i.imgur.com/KdnWWs6.jpeg",
+    "image": "/images/asian-tiger.jpg",
     "description": "Aggressive ankle-biting mosquito active throughout the day.",
     "facts": ["Thrives in shaded outdoor areas.", "Can survive cooler temperatures."],
-    "bitePhotos": ["https://i.imgur.com/y9mdFpW.jpeg"],
-    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
+    "bitePhotos": ["/images/asian-tiger-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1
+    },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -33,11 +39,14 @@
     "category": "Mosquitoes",
     "danger": "Moderate",
     "riskLevel": 2,
-    "image": "https://i.imgur.com/LZkSKdH.jpeg",
+    "image": "/images/culex.jpg",
     "description": "Night-biting mosquito known for spreading West Nile Virus.",
     "facts": ["Breeds in standing water.", "Active from dusk through night."],
-    "bitePhotos": ["https://i.imgur.com/mY6SVxQ.jpeg"],
-    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2, "May": 3, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1 },
+    "bitePhotos": ["/images/culex-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2, "May": 3, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1
+    },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -47,25 +56,52 @@
     "category": "No-See-Ums",
     "danger": "Severe",
     "riskLevel": 3,
-    "image": "https://i.imgur.com/isM4Q3d.jpeg",
+    "image": "/images/no-see-um.jpg",
     "description": "Tiny biting insect causing severe welts; thrives in coastal humidity.",
     "facts": ["Active in low wind.", "Most active at dawn/dusk."],
-    "bitePhotos": ["https://i.imgur.com/nlpl6uR.jpeg"],
-    "seasonalActivity": { "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 4, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 3, "Dec": 2 },
+    "bitePhotos": ["/images/no-see-um-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 4, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 3, "Dec": 2
+    },
     "products": ["PESKY® No-See-Um Defense", "PESKY® Bug Away Spray"]
   },
 
   {
     "name": "Sand Fly",
-    "category": "No-See-Ums",
     "type": "Midge",
+    "category": "No-See-Ums",
     "danger": "High",
     "riskLevel": 3,
-    "image": "https://i.imgur.com/mqUFD1Z.jpeg",
+    "image": "/images/sand-fly.jpg",
     "description": "Night-active biting midges that swarm in humid areas.",
     "facts": ["Very quiet flier.", "Peak summer activity."],
-    "bitePhotos": ["https://i.imgur.com/J0P5iOj.jpeg"],
-    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1 },
+    "bitePhotos": ["/images/sand-fly-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1
+    },
     "products": ["PESKY® Bug Away Spray"]
+  },
+
+  {
+    "name": "Yellow Fly (Diachlorus ferrugatus)",
+    "type": "Biting Fly",
+    "category": "Flies",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/yellow-fly.jpg",
+    "description": "Extremely painful biter found in Florida and the Southeast. Very aggressive in warm, humid, shaded environments.",
+    "facts": [
+      "Peak season is late spring through early summer.",
+      "Attracted to movement, carbon dioxide, and dark clothing.",
+      "Females require blood meals to reproduce."
+    ],
+    "bitePhotos": ["/images/yellow-fly-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
+    },
+    "products": ["PESKY® Bug Away Spray", "PESKY® Cooling Relief Gel"]
   }
 ]
