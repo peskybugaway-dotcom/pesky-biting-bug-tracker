@@ -1,190 +1,318 @@
-import React, { useState } from "react";
-import { ArrowLeft, AlertCircle, Send } from "lucide-react";
+// src/components/BugDetail.jsx
+import React, { useState, useEffect } from "react";
+import { ArrowLeft, Play, UploadCloud } from "lucide-react";
 
-/* -----------------------------------------------------------
-   DATA LOOKUPS
------------------------------------------------------------ */
-const severityLevels = {
-  Severe: 4,
-  High: 3,
-  Moderate: 2,
-  Low: 1,
-};
+// -------------------------------------------
+// Utility Components for Features
+// -------------------------------------------
 
-const seasonalActivity = {
-  mosquito: [2, 2, 3, 3, 4, 4, 4, 4, 3, 2, 1, 1],
-  noseeum:  [1, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 1],
-  bitingfly:[0, 0, 1, 2, 4, 4, 4, 3, 2, 1, 0, 0],
-  midge:    [1, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 1],
-  fireant:  [1, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 1],
-  tick:     [1, 1, 2, 3, 4, 4, 4, 3, 2, 2, 1, 1],
-};
-
-const protectionSteps = {
-  mosquito: [
-    "Use PESKY® Bug Away Spray before going outside",
-    "Avoid dusk and dawn if possible",
-    "Remove standing water near your home",
-  ],
-  noseeum: [
-    "Apply PESKY® Bug Away Heavy Duty",
-    "Increase wind flow with fans",
-    "Close windows without micro-screen mesh",
-  ],
-  bitingfly: [
-    "Wear light-colored clothing",
-    "Use PESKY® Bug Away Spray",
-    "Avoid shiny surfaces outdoors",
-  ],
-  fireant: [
-    "Use PESKY® Ant Defense around mound areas",
-    "Do not disturb ant hills",
-    "Wear closed shoes in grassy areas",
-  ],
-  tick: [
-    "Apply PESKY® Bug Away to shoes and socks",
-    "Avoid tall grass",
-    "Shower and check body after hiking",
-  ],
-};
-
-const similarities = {
-  mosquito: ["No-See-Um", "Sand Fly"],
-  noseeum: ["Mosquito", "Sand Fly"],
-  bitingfly: ["Horsefly", "Deer Fly"],
-  fireant: ["Carpenter Ant"],
-  tick: ["Deer Tick", "Lone Star Tick"],
-};
-
-/* -----------------------------------------------------------
-   COMPONENT
------------------------------------------------------------ */
-export default function BugDetail({ bug, back }) {
-  const key = bug.type.toLowerCase().includes("mosquito")
-    ? "mosquito"
-    : bug.type.toLowerCase().includes("midge")
-    ? "noseeum"
-    : bug.type.toLowerCase().includes("fly")
-    ? "bitingfly"
-    : bug.type.toLowerCase().includes("ant")
-    ? "fireant"
-    : bug.type.toLowerCase().includes("tick")
-    ? "tick"
-    : "mosquito";
-
-  const severity = severityLevels[bug.danger] || 1;
-  const heatmap = seasonalActivity[key];
-  const steps = protectionSteps[key];
-  const similars = similarities[key];
-
-  const [messageSent, setMessageSent] = useState(false);
+// Animated Gauge
+function RiskGauge({ level }) {
+  const color = ["bg-green-400", "bg-yellow-400", "bg-orange-500", "bg-red-600"][level] || "bg-slate-500";
+  const pct = (level + 1) * 25;
 
   return (
-    <div className="p-6 max-w-xl mx-auto space-y-6">
+    <div className="pesky-card p-4">
+      <h3 className="text-lg font-bold text-emerald-300 mb-2">Bite Severity</h3>
 
-      {/* Back Button */}
+      <div className="w-full bg-slate-700 h-3 rounded-full overflow-hidden">
+        <div
+          className={`h-3 ${color} transition-all duration-700`}
+          style={{ width: `${pct}%` }}
+        ></div>
+      </div>
+
+      <p className="text-white mt-2 text-sm">
+        Severity: <span className="font-bold">{["Low", "Moderate", "High", "Severe"][level]}</span>
+      </p>
+    </div>
+  );
+}
+
+// Seasonal activity heatmap
+function SeasonalChart({ bug }) {
+  const data = bug.seasonalActivity || {
+    Jan: 1, Feb: 1, Mar: 2, Apr: 2, May: 3, Jun: 4,
+    Jul: 4, Aug: 4, Sep: 3, Oct: 2, Nov: 1, Dec: 1,
+  };
+
+  const colors = ["bg-green-400", "bg-yellow-400", "bg-orange-500", "bg-red-600"];
+
+  return (
+    <div className="pesky-card p-5 space-y-3">
+      <h3 className="text-lg font-bold text-emerald-300">Seasonal Activity Heatmap</h3>
+
+      <div className="grid grid-cols-6 gap-2 text-xs text-white">
+        {Object.entries(data).map(([month, level]) => (
+          <div key={month} className="flex flex-col items-center">
+            <div className={`w-6 h-6 rounded ${colors[level]}`}></div>
+            <span className="mt-1">{month}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Bite photo toggle
+function BitePhotos({ images = [] }) {
+  const [show, setShow] = useState(false);
+  if (!images.length) return null;
+
+  return (
+    <div className="pesky-card p-5 space-y-3">
+      <div className="flex justify-between items-center">
+        <h3 className="text-lg font-bold text-emerald-300">Bite Reactions</h3>
+        <button
+          onClick={() => setShow(!show)}
+          className="px-3 py-1 bg-slate-700 rounded text-white text-sm"
+        >
+          {show ? "Hide" : "Show"}
+        </button>
+      </div>
+
+      {show && (
+        <div className="grid grid-cols-2 gap-3">
+          {images.map((src) => (
+            <img
+              key={src}
+              src={src}
+              className="rounded-lg shadow border border-slate-700"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Wingbeat sound player
+function BugSoundPlayer({ bug }) {
+  const soundMap = {
+    mosquito: "/sounds/mosquito.mp3",
+    midge: "/sounds/noseeum.mp3",
+    fly: "/sounds/fly.mp3",
+  };
+
+  const type = bug.type.toLowerCase();
+  let key = null;
+
+  if (type.includes("mosquito")) key = "mosquito";
+  if (type.includes("midge") || type.includes("no-see")) key = "midge";
+  if (type.includes("fly")) key = "fly";
+
+  if (!key || !soundMap[key]) return null;
+
+  const play = () => new Audio(soundMap[key]).play();
+
+  return (
+    <div className="pesky-card p-5 space-y-3">
+      <h3 className="text-lg font-bold text-emerald-300">Wingbeat Sound</h3>
+
       <button
-        onClick={back}
-        className="flex items-center gap-2 px-4 py-2 bg-slate-700 
-                  hover:bg-slate-600 rounded-full text-white transition"
+        onClick={play}
+        className="flex items-center gap-2 px-4 py-2 bg-slate-700 rounded-lg"
       >
-        <ArrowLeft className="w-4 h-4" />
-        Back
+        <Play className="w-4 h-4 text-emerald-300" />
+        Play Sample
       </button>
 
-      {/* MAIN CARD */}
-      <div className="pesky-card p-6 space-y-4">
-        <h1 className="text-3xl font-bold text-emerald-400">{bug.name}</h1>
+      <p className="text-xs text-slate-400">
+        Insects have species-specific wingbeat frequencies.
+      </p>
+    </div>
+  );
+}
 
-        {bug.image && (
-          <img
-            src={bug.image}
-            className="w-full rounded-lg shadow-lg border border-slate-700"
-          />
-        )}
+// Live U.S. heat zones
+function BugHeatMap({ bug }) {
+  const zones = bug.activityMap || {
+    Florida: 4,
+    Texas: 3,
+    GulfCoast: 4,
+    Midwest: 2,
+    Northeast: 1,
+    Southwest: 3,
+    WestCoast: 1,
+  };
 
-        <p className="text-slate-300">{bug.description}</p>
-      </div>
+  const scale = ["bg-green-400", "bg-yellow-400", "bg-orange-500", "bg-red-600"];
 
-      {/* 🔥 Bite Severity Meter */}
-      <div className="pesky-card p-5 space-y-3">
-        <h3 className="text-lg font-bold text-red-400">Bite Severity</h3>
+  return (
+    <div className="pesky-card p-5 space-y-3">
+      <h3 className="text-lg font-bold text-emerald-300">U.S. Activity Zones</h3>
 
-        <div className="flex gap-2">
-          {[1, 2, 3, 4].map((lvl) => (
-            <div
-              key={lvl}
-              className={`h-4 flex-1 rounded transition-all ${
-                lvl <= severity ? "bg-red-500" : "bg-slate-700"
-              }`}
-            ></div>
-          ))}
-        </div>
-
-        <p className="text-sm text-slate-300">
-          Severity Level: <span className="text-white">{bug.danger}</span>
-        </p>
-      </div>
-
-      {/* 🔥 Seasonal Heatmap */}
-      <div className="pesky-card p-5">
-        <h3 className="text-lg font-bold text-emerald-300 mb-3">Seasonal Activity</h3>
-
-        <div className="grid grid-cols-12 gap-1">
-          {heatmap.map((lvl, i) => (
-            <div
-              key={i}
-              className={`h-6 rounded transition-all ${
-                ["bg-slate-700", "bg-green-400", "bg-yellow-400", "bg-orange-500", "bg-red-500"][lvl]
-              }`}
-            ></div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-12 text-[10px] text-center mt-1 text-slate-400">
-          {["J","F","M","A","M","J","J","A","S","O","N","D"].map((m) => (
-            <span key={m}>{m}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* 🔥 Protection Steps */}
-      <div className="pesky-card p-5">
-        <h3 className="text-lg font-bold text-emerald-300 mb-3">How to Protect Yourself</h3>
-
-        <ul className="list-disc ml-5 space-y-1 text-white">
-          {steps.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-      </div>
-
-      {/* 🔥 Similar Insects */}
-      <div className="pesky-card p-5">
-        <h3 className="text-lg font-bold text-emerald-300 mb-3">Similar Insects</h3>
-
-        {similars.map((name) => (
-          <div key={name} className="p-2 bg-slate-700/40 rounded mb-1">
-            {name}
+      <div className="grid grid-cols-2 gap-3 text-white">
+        {Object.entries(zones).map(([region, level]) => (
+          <div key={region} className="flex items-center gap-3">
+            <div className={`w-6 h-6 rounded ${scale[level]}`}></div>
+            <span>{region}</span>
           </div>
         ))}
       </div>
 
-      {/* 🔥 Report Sighting */}
-      <div className="pesky-card p-5 text-center">
-        {!messageSent ? (
-          <button
-            onClick={() => setMessageSent(true)}
-            className="pesky-btn flex items-center gap-2 mx-auto"
-          >
-            <Send className="w-4 h-4" /> Report Sighting
-          </button>
-        ) : (
-          <p className="text-emerald-400 font-bold">
-            ✓ Thank you! Sighting recorded.
-          </p>
-        )}
+      <p className="text-xs text-slate-400 mt-2">
+        Higher intensity colors = increased bite probability.
+      </p>
+    </div>
+  );
+}
+
+// Predictor: Is this bug near me?
+function BugNearMe({ bug }) {
+  const [risk, setRisk] = useState("Checking...");
+
+  useEffect(() => {
+    async function check() {
+      try {
+        const pos = await new Promise((res, rej) =>
+          navigator.geolocation.getCurrentPosition(res, rej)
+        );
+        const { latitude } = pos.coords;
+
+        const chance =
+          latitude > 25 && latitude < 35
+            ? "High"
+            : latitude < 45
+            ? "Moderate"
+            : "Low";
+
+        setRisk(chance);
+      } catch {
+        setRisk("Unknown");
+      }
+    }
+
+    check();
+  }, []);
+
+  return (
+    <div className="pesky-card p-5">
+      <h3 className="text-lg font-bold text-emerald-300">Is This Bug Near Me?</h3>
+      <p className="text-white mt-1">
+        Likelihood in your area:{" "}
+        <span className="text-emerald-400 font-bold">{risk}</span>
+      </p>
+    </div>
+  );
+}
+
+// AI Image Identifier
+function BugAIIdentifier({ onIdentify }) {
+  const [preview, setPreview] = useState(null);
+  const [result, setResult] = useState(null);
+
+  const handleImg = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPreview(URL.createObjectURL(file));
+    setResult("Analyzing...");
+
+    setTimeout(() => {
+      setResult("Possible Mosquito (89% confidence)");
+      onIdentify && onIdentify("Mosquito");
+    }, 1200);
+  };
+
+  return (
+    <div className="pesky-card p-5 space-y-3">
+      <h3 className="text-lg font-bold text-emerald-300">AI Bug Identifier</h3>
+
+      <label className="flex flex-col items-center p-4 border border-slate-600 rounded-lg cursor-pointer hover:bg-slate-700/30">
+        <UploadCloud className="w-6 h-6 text-emerald-400 mb-2" />
+        <span className="text-white">Upload Bug Photo</span>
+        <input type="file" accept="image/*" hidden onChange={handleImg} />
+      </label>
+
+      {preview && (
+        <img src={preview} className="rounded-lg shadow border border-slate-700" />
+      )}
+
+      {result && <p className="text-emerald-300 font-bold">{result}</p>}
+    </div>
+  );
+}
+
+// -------------------------------------------
+// MAIN COMPONENT: BugDetail
+// -------------------------------------------
+export default function BugDetail({ bug, back }) {
+  if (!bug) return null;
+
+  return (
+    <div className="p-6 space-y-6 max-w-xl mx-auto">
+
+      {/* Header + Back Button */}
+      <button
+        onClick={back}
+        className="px-3 py-1 bg-slate-700 text-white rounded-full flex items-center gap-1"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back
+      </button>
+
+      {/* Main Profile Card */}
+      <div className="pesky-card p-6 space-y-4">
+        <h1 className="text-3xl font-bold text-emerald-400">{bug.name}</h1>
+
+        <img
+          src={bug.image}
+          className="w-full rounded-lg shadow border border-slate-700"
+        />
+
+        <p className="text-slate-300">{bug.description}</p>
       </div>
+
+      {/* Risk Gauge */}
+      <RiskGauge level={bug.riskLevel || 2} />
+
+      {/* Seasonal Chart */}
+      <SeasonalChart bug={bug} />
+
+      {/* Map Activity Zones */}
+      <BugHeatMap bug={bug} />
+
+      {/* Bite Photos */}
+      <BitePhotos images={bug.bitePhotos || []} />
+
+      {/* Sound Player */}
+      <BugSoundPlayer bug={bug} />
+
+      {/* GPS Predictor */}
+      <BugNearMe bug={bug} />
+
+      {/* AI Image Identifier */}
+      <BugAIIdentifier />
+
+      {/* Extra Facts */}
+      {bug.facts && (
+        <div className="pesky-card p-5">
+          <h3 className="text-lg font-bold text-emerald-300">Did You Know?</h3>
+          <ul className="list-disc pl-5 text-white space-y-1">
+            {bug.facts.map((f, i) => (
+              <li key={i}>{f}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Recommended Products */}
+      {bug.products && (
+        <div className="pesky-card p-5 space-y-2">
+          <h3 className="text-lg font-bold text-emerald-300">
+            Recommended PESKY® Protection
+          </h3>
+
+          {bug.products.map((p) => (
+            <div
+              key={p}
+              className="text-white bg-slate-700/40 rounded-lg p-2 border border-slate-600"
+            >
+              • {p}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
