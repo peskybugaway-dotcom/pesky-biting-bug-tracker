@@ -130,7 +130,6 @@ const BUGS = [
   }
 ];
 
-
 export default function BugEncyclopedia({ onSelectBug }) {
   return (
     <div className="p-6 space-y-6 max-w-xl mx-auto">
