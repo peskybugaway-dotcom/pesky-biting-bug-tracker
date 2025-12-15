@@ -1,57 +1,40 @@
 import React from "react";
-import { ShieldAlert, AlertTriangle, Bug } from "lucide-react";
 
 export default function BugCard({ bug, onClick }) {
-  const dangerColors = {
-    Low: "text-green-500",
-    Moderate: "text-yellow-400",
-    High: "text-orange-500",
-    Severe: "text-red-500"
-  };
-
-  const DangerIcon = () => {
-    switch (bug.danger) {
-      case "Severe":
-      case "High":
-        return <ShieldAlert className={`w-6 h-6 ${dangerColors[bug.danger]}`} />;
-      case "Moderate":
-        return <AlertTriangle className={`w-6 h-6 ${dangerColors[bug.danger]}`}/>;
-      default:
-        return <Bug className="w-6 h-6 text-green-400" />;
-    }
-  };
-
   return (
     <div
       onClick={onClick}
-      className="
-        bg-[#1c231f]/70 border border-[#2e3b34]
-        hover:border-emerald-300/60 hover:shadow-lg
-        rounded-xl overflow-hidden cursor-pointer
-        transition transform hover:scale-[1.02]
-      "
+      className="pesky-card p-4 cursor-pointer hover:bg-slate-700/60 transition rounded-xl"
     >
-      {/* Image */}
-      {bug.image && (
+      <div className="flex items-center gap-4">
+        {/* Image */}
         <img
           src={bug.image}
           alt={bug.name}
-          className="w-full h-40 object-cover"
+          className="w-16 h-16 rounded-lg object-cover border border-slate-600"
         />
-      )}
 
-      {/* Info */}
-      <div className="p-4 space-y-1">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-emerald-300">{bug.name}</h3>
-          <DangerIcon />
+        <div className="flex-1">
+          <h3 className="text-white font-semibold text-lg">
+            {bug.name}
+          </h3>
+
+          <p className="text-slate-300 text-sm">{bug.category}</p>
+
+          <span
+            className={`inline-block mt-1 px-2 py-1 rounded text-xs ${
+              bug.danger === "Severe"
+                ? "bg-red-600 text-white"
+                : bug.danger === "High"
+                ? "bg-orange-500 text-white"
+                : bug.danger === "Moderate"
+                ? "bg-yellow-500 text-black"
+                : "bg-green-500 text-black"
+            }`}
+          >
+            {bug.danger}
+          </span>
         </div>
-
-        <p className="text-sm text-slate-300">{bug.type}</p>
-
-        <p className="text-xs text-slate-400 line-clamp-2">
-          {bug.description}
-        </p>
       </div>
     </div>
   );
