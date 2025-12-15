@@ -27,13 +27,25 @@ export default function BugDetail({ bug, back }) {
       {/* DESCRIPTION */}
       <p className="text-slate-300 leading-relaxed">{bug.description}</p>
 
-      {/* RISK LEVEL */}
-      <div className="space-y-2">
-        <h3 className="text-white font-semibold">Risk Level</h3>
-        <div
-          className={`h-3 rounded-full bg-${riskColors[bug.riskLevel]}-500`}
-        ></div>
-      </div>
+  {/* RISK LEVEL */}
+<div className="space-y-2">
+  <h3 className="text-white font-semibold">Risk Level</h3>
+
+  <div
+    className="h-3 rounded-full w-full"
+    style={{
+      backgroundColor:
+        bug.riskLevel === 3
+          ? "red"
+          : bug.riskLevel === 2
+          ? "orange"
+          : bug.riskLevel === 1
+          ? "yellow"
+          : "green"
+    }}
+  ></div>
+</div>
+
 
       {/* FACTS */}
       {bug.facts && (
