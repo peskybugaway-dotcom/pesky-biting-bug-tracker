@@ -103,67 +103,65 @@
       "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
     },
     "products": ["PESKY® Bug Away Spray", "PESKY® Cooling Relief Gel"]
-    },
-  
-    {
-  "name": "Fire Ant",
-  "type": "Ant",
-  "category": "Ants",
-  "danger": "High",
-  "riskLevel": 3,
-  "image": "/images/fire-ant.jpg",
-  "description": "Aggressive mound-building ants known for painful repeated stings.",
-  "facts": [
-    "Can swarm quickly when the mound is disturbed.",
-    "Their venom can cause pustules and allergic reactions."
-  ],
-  "bitePhotos": ["/images/fire-ant-bite.jpg"],
-  "seasonalActivity": {
-    "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-    "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1
   },
-  "products": ["PESKY® Cooling Relief Gel"]
-},
-  
-  {
-  "name": "Deer Fly",
-  "type": "Biting Fly",
-  "category": "Flies",
-  "danger": "High",
-  "riskLevel": 3,
-  "image": "/images/deer-fly.jpg",
-  "description": "Small but extremely aggressive. Known for circling and striking fast.",
-  "facts": [
-    "Highly attracted to sweat and CO₂.",
-    "Often bite near rivers, lakes, and wetlands."
-  ],
-  "bitePhotos": ["/images/deer-fly-bite.jpg"],
-  "seasonalActivity": {
-    "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3, "Jun": 4,
-    "Jul": 4, "Aug": 4, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
-  },
-  "products": ["PESKY® Bug Away Spray"]
-},
-  
-{
-  "name": "Deer Tick (Blacklegged Tick)",
-  "type": "Tick",
-  "category": "Ticks",
-  "danger": "Severe",
-  "riskLevel": 3,
-  "image": "/images/deer-tick.jpg",
-  "description": "Primary carrier of Lyme Disease. Prefers shaded, grassy environments.",
-  "facts": [
-    "Nymphs are extremely small and easy to miss.",
-    "Peak season late spring through summer."
-  ],
-  "bitePhotos": ["/images/deer-tick-bite.jpg"],
-  "seasonalActivity": {
-    "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-    "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-  },
-  "products": ["PESKY® Bug Away Spray"]
-  
 
+  {
+    "name": "Fire Ant",
+    "type": "Ant",
+    "category": "Ants",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/fire-ant.jpg",
+    "description": "Aggressive mound-building ants known for painful repeated stings.",
+    "facts": [
+      "Can swarm quickly when the mound is disturbed.",
+      "Their venom can cause pustules and allergic reactions."
+    ],
+    "bitePhotos": ["/images/fire-ant-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1
+    },
+    "products": ["PESKY® Cooling Relief Gel"]
+  },
+
+  {
+    "name": "Deer Fly",
+    "type": "Biting Fly",
+    "category": "Flies",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/deer-fly.jpg",
+    "description": "Small but extremely aggressive. Known for circling and striking fast.",
+    "facts": [
+      "Highly attracted to sweat and CO₂.",
+      "Often bite near rivers, lakes, and wetlands."
+    ],
+    "bitePhotos": ["/images/deer-fly-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3, "Jun": 4,
+      "Jul": 4, "Aug": 4, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
+    },
+    "products": ["PESKY® Bug Away Spray"]
+  },
+
+  {
+    "name": "Deer Tick (Blacklegged Tick)",
+    "type": "Tick",
+    "category": "Ticks",
+    "danger": "Severe",
+    "riskLevel": 3,
+    "image": "/images/deer-tick.jpg",
+    "description": "Primary carrier of Lyme Disease. Prefers shaded, grassy environments.",
+    "facts": [
+      "Nymphs are extremely small and easy to miss.",
+      "Peak season late spring through summer."
+    ],
+    "bitePhotos": ["/images/deer-tick-bite.jpg"],
+    "seasonalActivity": {
+      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
+      "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
+    },
+    "products": ["PESKY® Bug Away Spray"]
   }
 ]
