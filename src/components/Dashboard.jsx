@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import RiskGauge from "./RiskGauge";
+import AnimatedRiskGauge from "./AnimatedRiskGauge";   // ✅ Updated import
 import PresetManager from "./PresetManager";
 
 export default function Dashboard() {
@@ -7,7 +7,7 @@ export default function Dashboard() {
   const [humidity, setHumidity] = useState(70);
   const [wind, setWind] = useState(3);
 
-  // Presets stored locally
+  // Load saved presets
   const [presets, setPresets] = useState(
     JSON.parse(localStorage.getItem("pesky-presets") || "[]")
   );
@@ -42,15 +42,14 @@ export default function Dashboard() {
     localStorage.setItem("pesky-presets", JSON.stringify(updated));
   }
 
-  // 🌍 Fetch weather for user's location
-  async function fetchWeather(setTemp, setHumidity, setWind) {
+  // Get weather
+  async function fetchWeather() {
     try {
-      const position = await new Promise((resolve, reject) =>
+      const pos = await new Promise((resolve, reject) =>
         navigator.geolocation.getCurrentPosition(resolve, reject)
       );
 
-      const { latitude, longitude } = position.coords;
-
+      const { latitude, longitude } = pos.coords;
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
 
       const res = await fetch(url);
@@ -60,12 +59,11 @@ export default function Dashboard() {
       setHumidity(Math.round(data.current.relative_humidity_2m));
       setWind(Math.round(data.current.wind_speed_10m));
     } catch (err) {
-      console.error("Weather fetch failed:", err);
-      alert("Could not access weather or location.");
+      alert("Unable to get weather or location.");
     }
   }
 
-  // 🌡️ REALISTIC RISK ENGINE
+  // ⭐ Bug Risk Algorithm
   const score = useMemo(() => {
     let s = 0;
 
@@ -84,111 +82,111 @@ export default function Dashboard() {
     return Math.max(0, Math.min(100, s));
   }, [temp, humidity, wind]);
 
- return (
-  <div className="p-4 space-y-6 max-w-xl mx-auto">
+  return (
+    <div className="p-4 space-y-6 max-w-xl mx-auto">
 
-    {/* HEADER */}
-    <div className="pesky-card">
-      <h1 className="text-3xl font-bold text-emerald-400">
-        PESKY Biting Bug Tracker
-      </h1>
-    </div>
+      {/* HEADER */}
+      <div className="pesky-card text-center">
+        <h1 className="text-3xl font-bold text-emerald-400">
+          PESKY Biting Bug Tracker
+        </h1>
+        <p className="text-slate-300 text-sm -mt-1">
+          Real-time environment-based bite index
+        </p>
+      </div>
 
-    {/* WEATHER + PRESET SECTION */}
-    <div className="pesky-card space-y-3">
-      <button
-        onClick={() => fetchWeather(setTemp, setHumidity, setWind)}
-        className="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 
-                   rounded-full text-white shadow"
-      >
-        Use My Location
-      </button>
-
-      <div className="flex gap-3">
+      {/* LOCATION + PRESET BUTTONS */}
+      <div className="pesky-card space-y-3">
         <button
-          onClick={savePreset}
-          className="flex-1 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 
-                     rounded-full text-white shadow"
+          onClick={fetchWeather}
+          className="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-full text-white shadow"
         >
-          Save Preset
+          Use My Location
         </button>
 
-        <button
-          onClick={() => setShowPresets(true)}
-          className="flex-1 px-3 py-2 bg-slate-700 hover:bg-slate-600 
-                     rounded-full text-white shadow"
-        >
-          Load Preset
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={savePreset}
+            className="flex-1 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white shadow"
+          >
+            Save Preset
+          </button>
+
+          <button
+            onClick={() => setShowPresets(true)}
+            className="flex-1 px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow"
+          >
+            Load Preset
+          </button>
+        </div>
       </div>
-    </div>
 
-    {/* RISK GAUGE */}
-    <div className="pesky-card">
-      <RiskGauge score={score} />
-    </div>
+      {/* ⭐ ANIMATED RISK GAUGE */}
+      <div className="pesky-card flex justify-center p-6">
+        <AnimatedRiskGauge value={score} />
+      </div>
 
-    {/* SLIDER CONTROLS */}
-    <div className="pesky-card space-y-6">
+      {/* SLIDERS */}
+      <div className="pesky-card space-y-6">
 
-      {/* Temperature */}
-      <div>
-        <label className="flex justify-between text-emerald-300 font-semibold mb-1">
-          <span>Temperature</span>
-          <span>{temp}°F</span>
-        </label>
-        <input
-          type="range"
-          min="40"
-          max="105"
-          value={temp}
-          onChange={(e) => setTemp(Number(e.target.value))}
-          className="w-full accent-emerald-500"
+        {/* Temperature */}
+        <div>
+          <label className="flex justify-between text-emerald-300 font-semibold mb-1">
+            <span>Temperature</span>
+            <span>{temp}°F</span>
+          </label>
+          <input
+            type="range"
+            min="40"
+            max="105"
+            value={temp}
+            onChange={(e) => setTemp(Number(e.target.value))}
+            className="w-full accent-emerald-500"
+          />
+        </div>
+
+        {/* Humidity */}
+        <div>
+          <label className="flex justify-between text-emerald-300 font-semibold mb-1">
+            <span>Humidity</span>
+            <span>{humidity}%</span>
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={humidity}
+            onChange={(e) => setHumidity(Number(e.target.value))}
+            className="w-full accent-sky-400"
+          />
+        </div>
+
+        {/* Wind */}
+        <div>
+          <label className="flex justify-between text-emerald-300 font-semibold mb-1">
+            <span>Wind Speed</span>
+            <span>{wind} mph</span>
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="25"
+            value={wind}
+            onChange={(e) => setWind(Number(e.target.value))}
+            className="w-full accent-purple-400"
+          />
+        </div>
+      </div>
+
+      {/* PRESET POPUP */}
+      {showPresets && (
+        <PresetManager
+          presets={presets}
+          loadPreset={loadPreset}
+          deletePreset={deletePreset}
+          close={() => setShowPresets(false)}
         />
-      </div>
-
-      {/* Humidity */}
-      <div>
-        <label className="flex justify-between text-emerald-300 font-semibold mb-1">
-          <span>Humidity</span>
-          <span>{humidity}%</span>
-        </label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={humidity}
-          onChange={(e) => setHumidity(Number(e.target.value))}
-          className="w-full accent-sky-400"
-        />
-      </div>
-
-      {/* Wind */}
-      <div>
-        <label className="flex justify-between text-emerald-300 font-semibold mb-1">
-          <span>Wind Speed</span>
-          <span>{wind} mph</span>
-        </label>
-        <input
-          type="range"
-          min="0"
-          max="25"
-          value={wind}
-          onChange={(e) => setWind(Number(e.target.value))}
-          className="w-full accent-purple-400"
-        />
-      </div>
+      )}
     </div>
-
-    {/* PRESET POPUP */}
-    {showPresets && (
-      <PresetManager
-        presets={presets}
-        loadPreset={loadPreset}
-        deletePreset={deletePreset}
-        close={() => setShowPresets(false)}
-      />
-    )}
-   </div>
   );
 }
