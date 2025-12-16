@@ -1,10 +1,7 @@
 import React from "react";
-import { ArrowLeft, AlertTriangle, Bug } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import getBugImage from "../utils/getBugImage";
 import AnimatedRiskGauge from "./AnimatedRiskGauge";
-
-  <AnimatedRiskGauge value={bug.riskLevel} />
-</div>
 
 const riskColors = {
   0: "bg-gray-400",
@@ -52,17 +49,16 @@ export default function BugDetail({ bug, back }) {
       <h1 className="text-2xl font-bold text-white">{name}</h1>
       <p className="text-slate-300">{description}</p>
 
-    {/* ANIMATED RISK GAUGE */}
-<div className="mt-6">
-  <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-    Bite Severity
-  </h3>
+      {/* ANIMATED RISK GAUGE */}
+      <div className="mt-6">
+        <h3 className="text-white font-semibold mb-2">
+          Bite Severity
+        </h3>
 
-  <AnimatedRiskGauge value={bug.riskLevel} />
-</div>
+        <AnimatedRiskGauge value={bug.riskLevel} />
 
-
-        <div className="bg-slate-800 h-3 rounded-full overflow-hidden border border-slate-600">
+        {/* Static fallback bar */}
+        <div className="bg-slate-800 h-3 mt-3 rounded-full overflow-hidden border border-slate-600">
           <div
             className={`${riskColors[bug.riskLevel]} h-full transition-all`}
             style={{ width: `${(bug.riskLevel / 3) * 100}%` }}
@@ -127,7 +123,9 @@ export default function BugDetail({ bug, back }) {
       {/* PRODUCTS */}
       {products.length > 0 && (
         <div>
-          <h3 className="text-white font-semibold mb-2">Recommended PESKY® Products</h3>
+          <h3 className="text-white font-semibold mb-2">
+            Recommended PESKY® Products
+          </h3>
           <div className="flex flex-wrap gap-2">
             {products.map((p, i) => (
               <span
@@ -140,6 +138,7 @@ export default function BugDetail({ bug, back }) {
           </div>
         </div>
       )}
+
     </div>
   );
 }
