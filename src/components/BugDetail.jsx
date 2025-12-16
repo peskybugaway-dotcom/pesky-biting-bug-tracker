@@ -51,9 +51,7 @@ export default function BugDetail({ bug, back }) {
 
       {/* ANIMATED RISK GAUGE */}
       <div className="mt-6">
-        <h3 className="text-white font-semibold mb-2">
-          Bite Severity
-        </h3>
+        <h3 className="text-white font-semibold mb-2">Bite Severity</h3>
 
         <AnimatedRiskGauge value={bug.riskLevel} />
 
@@ -111,9 +109,7 @@ export default function BugDetail({ bug, back }) {
                 src={src}
                 alt="bite example"
                 className="h-24 w-24 object-cover rounded-lg border border-slate-700 shadow-md"
-                onError={(e) =>
-                  (e.target.src = "/images/fallback-bite.png")
-                }
+                onError={(e) => (e.target.src = "/images/fallback-bite.png")}
               />
             ))}
           </div>
