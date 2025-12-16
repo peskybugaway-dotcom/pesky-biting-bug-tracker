@@ -1,6 +1,10 @@
 import React from "react";
 import { ArrowLeft, AlertTriangle, Bug } from "lucide-react";
 import getBugImage from "../utils/getBugImage";
+import AnimatedRiskGauge from "./AnimatedRiskGauge";
+
+  <AnimatedRiskGauge value={bug.riskLevel} />
+</div>
 
 const riskColors = {
   0: "bg-gray-400",
@@ -48,12 +52,15 @@ export default function BugDetail({ bug, back }) {
       <h1 className="text-2xl font-bold text-white">{name}</h1>
       <p className="text-slate-300">{description}</p>
 
-      {/* RISK GAUGE */}
-      <div className="mt-4">
-        <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-yellow-400" />
-          Bite Severity
-        </h3>
+    {/* ANIMATED RISK GAUGE */}
+<div className="mt-6">
+  <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+    Bite Severity
+  </h3>
+
+  <AnimatedRiskGauge value={bug.riskLevel} />
+</div>
+
 
         <div className="bg-slate-800 h-3 rounded-full overflow-hidden border border-slate-600">
           <div
