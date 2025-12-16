@@ -9,10 +9,7 @@
     "description": "Aggressive day-biting mosquito. Primary carrier of Dengue, Zika, and Yellow Fever.",
     "facts": ["Prefers biting humans over animals.", "Lays eggs in small water containers."],
     "bitePhotos": ["/images/aedes-aegypti-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -26,10 +23,7 @@
     "description": "Aggressive ankle-biting mosquito active throughout the day.",
     "facts": ["Thrives in shaded outdoor areas.", "Can survive cooler temperatures."],
     "bitePhotos": ["/images/asian-tiger-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -43,10 +37,7 @@
     "description": "Night-biting mosquito known for spreading West Nile Virus.",
     "facts": ["Breeds in standing water.", "Active from dusk through night."],
     "bitePhotos": ["/images/culex-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2, "May": 3, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2, "May": 3, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -60,10 +51,7 @@
     "description": "Tiny biting insect causing severe welts; thrives in coastal humidity.",
     "facts": ["Active in low wind.", "Most active at dawn/dusk."],
     "bitePhotos": ["/images/no-see-um-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 4, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 3, "Dec": 2
-    },
+    "seasonalActivity": { "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 4, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 3, "Dec": 2 },
     "products": ["PESKY® No-See-Um Defense", "PESKY® Bug Away Spray"]
   },
 
@@ -77,10 +65,7 @@
     "description": "Night-active biting midges that swarm in humid areas.",
     "facts": ["Very quiet flier.", "Peak summer activity."],
     "bitePhotos": ["/images/sand-fly-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -91,17 +76,10 @@
     "danger": "High",
     "riskLevel": 3,
     "image": "/images/yellow-fly.jpg",
-    "description": "Extremely painful biter found in Florida and the Southeast. Very aggressive in warm, humid, shaded environments.",
-    "facts": [
-      "Peak season is late spring through early summer.",
-      "Attracted to movement, carbon dioxide, and dark clothing.",
-      "Females require blood meals to reproduce."
-    ],
+    "description": "Extremely painful biter common in warm, humid regions of the Southeast U.S.",
+    "facts": ["Peak season May–July.", "Attracted to movement.", "One of Florida’s most feared biting insects."],
     "bitePhotos": ["/images/yellow-fly-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
-    },
+    "seasonalActivity": { "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 4, "Jun": 4, "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0 },
     "products": ["PESKY® Bug Away Spray", "PESKY® Cooling Relief Gel"]
   },
 
@@ -113,15 +91,9 @@
     "riskLevel": 3,
     "image": "/images/fire-ant.jpg",
     "description": "Aggressive mound-building ants known for painful repeated stings.",
-    "facts": [
-      "Can swarm quickly when the mound is disturbed.",
-      "Their venom can cause pustules and allergic reactions."
-    ],
+    "facts": ["Can swarm quickly when mound is disturbed.", "Venom causes pustules and allergic reactions."],
     "bitePhotos": ["/images/fire-ant-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1 },
     "products": ["PESKY® Cooling Relief Gel"]
   },
 
@@ -132,16 +104,10 @@
     "danger": "High",
     "riskLevel": 3,
     "image": "/images/deer-fly.jpg",
-    "description": "Small but extremely aggressive. Known for circling and striking fast.",
-    "facts": [
-      "Highly attracted to sweat and CO₂.",
-      "Often bite near rivers, lakes, and wetlands."
-    ],
+    "description": "Small but extremely aggressive fly known for circling and fast striking.",
+    "facts": ["Attracted to sweat + CO₂.", "Common near wetlands."],
     "bitePhotos": ["/images/deer-fly-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3, "Jun": 4,
-      "Jul": 4, "Aug": 4, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
-    },
+    "seasonalActivity": { "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0 },
     "products": ["PESKY® Bug Away Spray"]
   },
 
@@ -152,446 +118,10 @@
     "danger": "Severe",
     "riskLevel": 3,
     "image": "/images/deer-tick.jpg",
-    "description": "Primary carrier of Lyme Disease. Prefers shaded, grassy environments.",
-    "facts": [
-      "Nymphs are extremely small and easy to miss.",
-      "Peak season late spring through summer."
-    ],
+    "description": "Primary carrier of Lyme Disease. Prefers shaded, grassy areas.",
+    "facts": ["Nymphs are extremely small.", "Peak season late spring–summer."],
     "bitePhotos": ["/images/deer-tick-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4,
-      "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Gallinipper (Psorophora ciliata)",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/gallinipper.jpg",
-    "description": "Large aggressive mosquito with a painful bite. Known as the 'giant mosquito'.",
-    "facts": ["One of the largest mosquitoes in North America.", "Females can bite through clothing."],
-    "bitePhotos": ["/images/gallinipper-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3,
-      "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 0
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Psorophora Ferox",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/psorophora-ferox.jpg",
-    "description": "Large aggressive purple-bodied mosquito known for extremely painful bites.",
-    "facts": ["Common in woodland areas.", "Strong daylight biter."],
-    "bitePhotos": ["/images/psorophora-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3,
-      "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 0
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Anopheles (Malaria Mosquito)",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "Severe",
-    "riskLevel": 3,
-    "image": "/images/anopheles.jpg",
-    "description": "Primary mosquito genus responsible for malaria transmission.",
-    "facts": ["Bites mainly at night.", "Prefers humid, warm climates."],
-    "bitePhotos": ["/images/anopheles-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Southern House Mosquito (Culex quinquefasciatus)",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/southern-house.jpg",
-    "description": "Common Florida mosquito known for West Nile and encephalitis transmission.",
-    "facts": ["Breeds in polluted water.", "Nighttime feeder."],
-    "bitePhotos": ["/images/southern-house-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Salt Marsh Mosquito (Aedes sollicitans)",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/salt-marsh.jpg",
-    "description": "Extremely aggressive coastal mosquito. Swarms after high tides.",
-    "facts": ["Can travel miles inland.", "Very strong flyer."],
-    "bitePhotos": ["/images/salt-marsh-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Carpenter Ant",
-    "type": "Ant",
-    "category": "Ants",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/carpenter-ant.jpg",
-    "description": "Large ant that nests in wood. Bites only when threatened.",
-    "facts": ["Often mistaken for termites.", "Common in Florida homes."],
-    "bitePhotos": ["/images/carpenter-ant-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Cooling Relief Gel"]
-  },
-
-  {
-    "name": "Ghost Ant",
-    "type": "Ant",
-    "category": "Ants",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/ghost-ant.jpg",
-    "description": "Tiny translucent ant common in Florida kitchens. Rarely bites.",
-    "facts": ["Sugar-loving species.", "Colonies split rapidly."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 3,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 2, "Dec": 2
-    },
-    "products": []
-  },
-
-  {
-    "name": "Bigheaded Ant",
-    "type": "Ant",
-    "category": "Ants",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/bigheaded-ant.jpg",
-    "description": "Invasive Florida ant species. Minor nuisance, can bite lightly.",
-    "facts": ["Large-headed soldiers are unique.", "Very common in Florida lawns."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": []
-  },
-
-  {
-    "name": "Argentine Ant",
-    "type": "Ant",
-    "category": "Ants",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/argentine-ant.jpg",
-    "description": "Fast-moving invasive ant forming supercolonies.",
-    "facts": ["Displaces native species.", "Common around moisture."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": []
-  },
-
-  {
-    "name": "Crazy Ant",
-    "type": "Ant",
-    "category": "Ants",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/crazy-ant.jpg",
-    "description": "Erratic-moving invasive ant. Nuisance indoors.",
-    "facts": ["Attracted to electronics.", "Forms massive colonies."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": []
-  },
-
-  {
-    "name": "Black Fly",
-    "type": "Biting Fly",
-    "category": "Flies",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/black-fly.jpg",
-    "description": "Tiny biting fly producing painful welts. Often found near water.",
-    "facts": ["Swarms aggressively.", "Peak in spring + summer."],
-    "bitePhotos": ["/images/black-fly-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2,
-      "May": 3, "Jun": 4, "Jul": 4, "Aug": 3,
-      "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Stable Fly",
-    "type": "Biting Fly",
-    "category": "Flies",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/stable-fly.jpg",
-    "description": "Painful biting fly often mistaken for a housefly.",
-    "facts": ["Targets ankles.", "Very active in mornings."],
-    "bitePhotos": ["/images/stable-fly-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2,
-      "May": 3, "Jun": 4, "Jul": 4, "Aug": 3,
-      "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Lone Star Tick",
-    "type": "Tick",
-    "category": "Ticks",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/lone-star-tick.jpg",
-    "description": "Aggressive tick causing Alpha-Gal red-meat allergy.",
-    "facts": ["Females have a white dot.", "Extremely fast movers."],
-    "bitePhotos": ["/images/lone-star-bite.jpg"],
-    "seasonalActivity": {
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Dog Tick",
-    "type": "Tick",
-    "category": "Ticks",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/dog-tick.jpg",
-    "description": "Large tick known to transmit Rocky Mountain Spotted Fever.",
-    "facts": ["Common in wooded terrain.", "Clings to tall grass."],
-    "bitePhotos": ["/images/dog-tick-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 1, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Gulf Coast Tick",
-    "type": "Tick",
-    "category": "Ticks",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/gulf-coast-tick.jpg",
-    "description": "Found throughout coastal Southeast. Vector of Rickettsia.",
-    "facts": ["Often on dogs.", "Prefers tall grassy areas."],
-    "bitePhotos": ["/images/gulf-coast-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "American Wood Tick",
-    "type": "Tick",
-    "category": "Ticks",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/american-wood-tick.jpg",
-    "description": "Large tick common in wooded areas.",
-    "facts": ["Can carry tularemia.", "Active in spring + summer."],
-    "bitePhotos": ["/images/wood-tick-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 3, "Aug": 2,
-      "Sep": 2, "Oct": 1, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Lovebugs",
-    "type": "Nuisance",
-    "category": "Nuisance",
-    "danger": "None",
-    "riskLevel": 0,
-    "image": "/images/lovebugs.jpg",
-    "description": "Harmless but abundant during Florida season flights.",
-    "facts": ["Attracted to car exhaust.", "Peak seasons: May & September."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2,
-      "May": 4, "Jun": 1, "Jul": 1, "Aug": 1,
-      "Sep": 4, "Oct": 1, "Nov": 0, "Dec": 0
-    },
-    "products": []
-  },
-
-  {
-    "name": "Palmetto Bug (American Cockroach)",
-    "type": "Nuisance",
-    "category": "Nuisance",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/palmetto.jpg",
-    "description": "Common Florida insect that startles more than it harms.",
-    "facts": ["Can fly in high humidity.", "Active at night."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": []
-  },
-
-  {
-    "name": "Crane Fly",
-    "type": "Nuisance",
-    "category": "Nuisance",
-    "danger": "None",
-    "riskLevel": 0,
-    "image": "/images/crane-fly.jpg",
-    "description": "Mosquito-like but harmless. Does NOT bite.",
-    "facts": ["Often called 'mosquito hawks' but do not eat mosquitoes.", "Attracted to lights."],
-    "bitePhotos": [],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": []
-  },
-
-  {
-    "name": "Thrips",
-    "type": "Nuisance",
-    "category": "Florida Pests",
-    "danger": "Low",
-    "riskLevel": 1,
-    "image": "/images/thrips.jpg",
-    "description": "Small plant-feeding insects that occasionally cause skin irritation.",
-    "facts": ["Found in flowers and plants.", "Can create small itchy welts."],
-    "bitePhotos": ["/images/thrips-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Cooling Relief Gel"]
-  },
-
-  {
-    "name": "Chiggers",
-    "type": "Mite",
-    "category": "Florida Pests",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/chigger.jpg",
-    "description": "Larval mites causing extremely itchy clusters of welts.",
-    "facts": ["Not actual bites — they inject saliva.", "Very common in tall grass & wooded areas."],
-    "bitePhotos": ["/images/chigger-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 0, "Feb": 0, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 0
-    },
-    "products": ["PESKY® Cooling Relief Gel"]
-  },
-
-  {
-    "name": "Sand Fleas",
-    "type": "Crustacean",
-    "category": "Florida Pests",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/sand-flea.jpg",
-    "description": "Beach pests causing itchy clusters on ankles and legs.",
-    "facts": ["Most active at dawn & dusk.", "Found along beaches and sand dunes."],
-    "bitePhotos": ["/images/sand-flea-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 3, "Jun": 3, "Jul": 3, "Aug": 3,
-      "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray", "PESKY® Cooling Relief Gel"]
-  },
-
-  {
-    "name": "Biting Gnats",
-    "type": "Gnat",
-    "category": "Florida Pests",
-    "danger": "Moderate",
-    "riskLevel": 2,
-    "image": "/images/biting-gnat.jpg",
-    "description": "Small flying gnats that create painful pinprick bites.",
-    "facts": ["Attracted to moisture.", "Common in marshy areas."],
-    "bitePhotos": ["/images/gnat-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1
-    },
-    "products": ["PESKY® Bug Away Spray"]
-  },
-
-  {
-    "name": "Black Salt Marsh Mosquito",
-    "type": "Mosquito",
-    "category": "Mosquitoes",
-    "danger": "High",
-    "riskLevel": 3,
-    "image": "/images/black-salt-marsh.jpg",
-    "description": "Aggressive coastal mosquito species with extremely painful bites.",
-    "facts": ["Very strong fliers.", "Swarms after tidal flooding."],
-    "bitePhotos": ["/images/black-salt-marsh-bite.jpg"],
-    "seasonalActivity": { 
-      "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3,
-      "May": 4, "Jun": 4, "Jul": 4, "Aug": 4,
-      "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1
-    },
+    "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   }
 ]
