@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BugCard from "./BugCard";
-import CategoryTabs from "./CategoryTabs";
+import CategoryTabs from "./CategoryTabs.jsx";
 import SearchFilter from "./SearchFilter";
 
 export default function BugEncyclopedia({ onSelectBug }) {
