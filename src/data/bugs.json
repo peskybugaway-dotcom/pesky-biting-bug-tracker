@@ -163,5 +163,75 @@
       "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1
     },
     "products": ["PESKY® Bug Away Spray"]
+    },
+
+    ,
+  {
+    "name": "Gallinipper (Psorophora ciliata)",
+    "type": "Mosquito",
+    "category": "Mosquitoes",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/gallinipper.jpg",
+    "description": "Large aggressive mosquito with a painful bite. Known as the 'giant mosquito'.",
+    "facts": ["One of the largest mosquitoes in North America.", "Females can bite through clothing."],
+    "bitePhotos": ["/images/gallinipper-bite.jpg"],
+    "seasonalActivity": { "Jan":0,"Feb":0,"Mar":1,"Apr":2,"May":3,"Jun":4,"Jul":4,"Aug":4,"Sep":3,"Oct":2,"Nov":1,"Dec":0 },
+    "products": ["PESKY® Bug Away Spray"]
+  },
+  {
+    "name": "Psorophora Ferox",
+    "type": "Mosquito",
+    "category": "Mosquitoes",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/psorophora-ferox.jpg",
+    "description": "Large aggressive purple-bodied mosquito known for extremely painful bites.",
+    "facts": ["Common in woodland areas.", "Strong daylight biter."],
+    "bitePhotos": ["/images/psorophora-bite.jpg"],
+    "seasonalActivity": { "Jan":0,"Feb":0,"Mar":1,"Apr":2,"May":3,"Jun":4,"Jul":4,"Aug":4,"Sep":3,"Oct":2,"Nov":1,"Dec":0 },
+    "products": ["PESKY® Bug Away Spray"]
+  },
+  {
+    "name": "Anopheles (Malaria Mosquito)",
+    "type": "Mosquito",
+    "category": "Mosquitoes",
+    "danger": "Severe",
+    "riskLevel": 3,
+    "image": "/images/anopheles.jpg",
+    "description": "Primary mosquito genus responsible for malaria transmission."
+
+,    "facts": ["Bites mainly at night.", "Prefers humid, warm climates."],
+    "bitePhotos": ["/images/anopheles-bite.jpg"],
+    "seasonalActivity": { "Jan":1,"Feb":1,"Mar":2,"Apr":3,"May":4,"Jun":4,"Jul":4,"Aug":4,"Sep":3,"Oct":2,"Nov":2,"Dec":1 },
+    "products": ["PESKY® Bug Away Spray"]
+  },
+  {
+    "name": "Southern House Mosquito (Culex quinquefasciatus)",
+    "type": "Mosquito",
+    "category": "Mosquitoes",
+    "danger": "Moderate",
+    "riskLevel": 2,
+    "image": "/images/southern-house.jpg",
+    "description": "Common Florida mosquito known for West Nile and encephalitis transmission.",
+    "facts": ["Breeds in polluted water.", "Nighttime feeder."],
+    "bitePhotos": ["/images/southern-house-bite.jpg"],
+    "seasonalActivity": { "Jan":1,"Feb":1,"Mar":2,"Apr":2,"May":3,"Jun":4,"Jul":4,"Aug":4,"Sep":3,"Oct":2,"Nov":2,"Dec":1 },
+    "products": ["PESKY® Bug Away Spray"]
+  },
+  {
+    "name": "Salt Marsh Mosquito (Aedes sollicitans)",
+    "type": "Mosquito",
+    "category": "Mosquitoes",
+    "danger": "High",
+    "riskLevel": 3,
+    "image": "/images/salt-marsh.jpg",
+    "description": "Extremely aggressive coastal mosquito. Swarms after high tides.",
+    "facts": ["Can travel miles inland.", "Very strong flyer."],
+    "bitePhotos": ["/images/salt-marsh-bite.jpg"],
+    "seasonalActivity": { "Jan":1,"Feb":1,"Mar":2,"Apr":3,"May":4,"Jun":4,"Jul":4,"Aug":4,"Sep":4,"Oct":3,"Nov":2,"Dec":1 },
+    "products": ["PESKY® Bug Away Spray"]
+  }
+
   }
 ]
