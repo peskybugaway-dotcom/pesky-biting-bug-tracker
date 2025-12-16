@@ -12,7 +12,6 @@
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
-
   {
     "name": "Aedes Albopictus (Asian Tiger Mosquito)",
     "type": "Mosquito",
@@ -26,7 +25,6 @@
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
-
   {
     "name": "Culex (House Mosquito)",
     "type": "Mosquito",
@@ -40,7 +38,6 @@
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 2, "May": 3, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
-
   {
     "name": "No-See-Um (Ceratopogonidae)",
     "type": "Biting Midge",
@@ -49,12 +46,11 @@
     "riskLevel": 3,
     "image": "/images/no-see-um.jpg",
     "description": "Tiny biting insect causing severe welts; thrives in coastal humidity.",
-    "facts": ["Active in low wind.", "Most active at dawn/dusk."],
+    "facts": ["Active in low wind.", "Most active at dawn and dusk."],
     "bitePhotos": ["/images/no-see-um-bite.jpg"],
     "seasonalActivity": { "Jan": 2, "Feb": 2, "Mar": 3, "Apr": 4, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 3, "Dec": 2 },
     "products": ["PESKY® No-See-Um Defense", "PESKY® Bug Away Spray"]
   },
-
   {
     "name": "Sand Fly",
     "type": "Midge",
@@ -68,7 +64,6 @@
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 4, "Oct": 3, "Nov": 2, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
   },
-
   {
     "name": "Yellow Fly (Diachlorus ferrugatus)",
     "type": "Biting Fly",
@@ -77,12 +72,11 @@
     "riskLevel": 3,
     "image": "/images/yellow-fly.jpg",
     "description": "Extremely painful biter common in warm, humid regions of the Southeast U.S.",
-    "facts": ["Peak season May–July.", "Attracted to movement.", "One of Florida’s most feared biting insects."],
+    "facts": ["Peak season May–July.", "Attracted to movement.", "Very aggressive in shade."],
     "bitePhotos": ["/images/yellow-fly-bite.jpg"],
     "seasonalActivity": { "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 4, "Jun": 4, "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0 },
     "products": ["PESKY® Bug Away Spray", "PESKY® Cooling Relief Gel"]
   },
-
   {
     "name": "Fire Ant",
     "type": "Ant",
@@ -91,12 +85,11 @@
     "riskLevel": 3,
     "image": "/images/fire-ant.jpg",
     "description": "Aggressive mound-building ants known for painful repeated stings.",
-    "facts": ["Can swarm quickly when mound is disturbed.", "Venom causes pustules and allergic reactions."],
+    "facts": ["Swarm rapidly when mound is disturbed.", "Their venom creates pustules."],
     "bitePhotos": ["/images/fire-ant-bite.jpg"],
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 3, "Oct": 2, "Nov": 1, "Dec": 1 },
     "products": ["PESKY® Cooling Relief Gel"]
   },
-
   {
     "name": "Deer Fly",
     "type": "Biting Fly",
@@ -104,13 +97,12 @@
     "danger": "High",
     "riskLevel": 3,
     "image": "/images/deer-fly.jpg",
-    "description": "Small but extremely aggressive fly known for circling and fast striking.",
-    "facts": ["Attracted to sweat + CO₂.", "Common near wetlands."],
+    "description": "Small but extremely aggressive fly known for fast circling attacks.",
+    "facts": ["Attracted to sweat and carbon dioxide.", "Common near wetlands."],
     "bitePhotos": ["/images/deer-fly-bite.jpg"],
     "seasonalActivity": { "Jan": 0, "Feb": 0, "Mar": 1, "Apr": 2, "May": 3, "Jun": 4, "Jul": 4, "Aug": 4, "Sep": 2, "Oct": 1, "Nov": 0, "Dec": 0 },
     "products": ["PESKY® Bug Away Spray"]
   },
-
   {
     "name": "Deer Tick (Blacklegged Tick)",
     "type": "Tick",
@@ -119,7 +111,7 @@
     "riskLevel": 3,
     "image": "/images/deer-tick.jpg",
     "description": "Primary carrier of Lyme Disease. Prefers shaded, grassy areas.",
-    "facts": ["Nymphs are extremely small.", "Peak season late spring–summer."],
+    "facts": ["Nymphs are extremely small.", "Peak season late spring through summer."],
     "bitePhotos": ["/images/deer-tick-bite.jpg"],
     "seasonalActivity": { "Jan": 1, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 4, "Jul": 4, "Aug": 3, "Sep": 2, "Oct": 2, "Nov": 1, "Dec": 1 },
     "products": ["PESKY® Bug Away Spray"]
