@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AlertTriangle, ShieldAlert, Bug, ChevronRight } from "lucide-react";
 
 // Risk styles for dynamic coloring
@@ -9,7 +9,7 @@ const riskStyles = {
   3: { bg: "bg-red-500", text: "text-red-500", icon: <AlertTriangle className="w-4 h-4" /> },
 };
 
-export default function BugCard({ bug, onClick }) {
+export default function BugCard({ bug, onSelect }) {
   const { name, category, danger, riskLevel, image } = bug;
   
   // Safeguard against missing risk levels
@@ -17,7 +17,7 @@ export default function BugCard({ bug, onClick }) {
 
   return (
     <div
-      onClick={onClick}
+      onClick={() => onSelect(bug)}
       className="
         group relative overflow-hidden
         bg-slate-900/40 backdrop-blur-md 
