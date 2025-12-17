@@ -1,67 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-export default function AnimatedRiskGauge({ value, score }) {
-  // Accept BOTH props for compatibility
-  const raw = score ?? value ?? 0;
+export default function AnimatedRiskGauge({ value }) {
+  // value 0-3 (0: Low, 1: Moderate, 2: High, 3: Severe)
+  const percentage = (value / 3) * 100;
+  // Calculate stroke for a semi-circle (circumference / 2)
+  const radius = 40;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (percentage / 200) * circumference;
 
-  // Always convert 0–100 safely
-  const safeValue = Math.max(0, Math.min(100, raw));
-
-  const [fill, setFill] = useState(0);
-
-  // Animate needle
-  useEffect(() => {
-    const t = setTimeout(() => setFill(safeValue), 120);
-    return () => clearTimeout(t);
-  }, [safeValue]);
-
-  // Angle: -90° → +90° semicircle
-  const angle = (fill / 100) * 180 - 90;
-
-  // Colors
-  const zoneColor =
-    fill < 25 ? "#10b981" :     // green
-    fill < 50 ? "#eab308" :     // yellow
-    fill < 75 ? "#f97316" :     // orange
-               "#ef4444";       // red
+  const getColor = (v) => {
+    if (v === 3) return "#ef4444"; // Red
+    if (v === 2) return "#f97316"; // Orange
+    if (v === 1) return "#eab308"; // Yellow
+    return "#10b981"; // Emerald
+  };
 
   return (
-    <div className="flex flex-col items-center">
-      <svg width="180" height="100" viewBox="0 0 180 100">
-        {/* Background arc */}
-        <path
-          d="M10 100 A80 80 0 0 1 170 100"
-          stroke="#1f2937"
-          strokeWidth="18"
-          fill="none"
+    <div className="relative flex items-center justify-center w-48 h-24 overflow-hidden">
+      <svg className="w-48 h-48 -rotate-90 transform translate-y-12">
+        {/* Background Track */}
+        <circle
+          cx="96"
+          cy="96"
+          r={radius}
+          stroke="#1e293b"
+          strokeWidth="12"
+          fill="transparent"
+          strokeDasharray={`${circumference / 2} ${circumference}`}
           strokeLinecap="round"
         />
-
-        {/* Colored segments */}
-        <path d="M10 100 A80 80 0 0 1 55 100" stroke="#10b981" strokeWidth="12" fill="none" />
-        <path d="M55 100 A80 80 0 0 1 100 100" stroke="#eab308" strokeWidth="12" fill="none" />
-        <path d="M100 100 A80 80 0 0 1 145 100" stroke="#f97316" strokeWidth="12" fill="none" />
-        <path d="M145 100 A80 80 0 0 1 170 100" stroke="#ef4444" strokeWidth="12" fill="none" />
-
-        {/* Needle */}
-        <line
-          x1="90"
-          y1="100"
-          x2={90 + 70 * Math.cos((angle * Math.PI) / 180)}
-          y2={100 - 70 * Math.sin((angle * Math.PI) / 180)}
-          stroke="#ffffff"
-          strokeWidth="4"
+        {/* Active Progress */}
+        <circle
+          cx="96"
+          cy="96"
+          r={radius}
+          stroke={getColor(value)}
+          strokeWidth="12"
+          fill="transparent"
+          strokeDasharray={`${circumference / 2} ${circumference}`}
+          strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
-          style={{ transition: "transform 0.7s ease", transformOrigin: "center" }}
+          className="transition-all duration-1000 ease-out"
         />
-
-        {/* Center cap */}
-        <circle cx="90" cy="100" r="6" fill="#ffffff" />
       </svg>
-
-      <p className="text-slate-300 text-sm mt-1">
-        Risk Level: <span style={{ color: zoneColor }}>{Math.round(fill)}%</span>
-      </p>
+      <div className="absolute bottom-0 text-center">
+        <span className="text-2xl font-black text-white">{percentage.toFixed(0)}%</span>
+        <p className="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Risk Factor</p>
+      </div>
     </div>
   );
 }
