@@ -1,135 +1,86 @@
-import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
-import getBugImage from "../utils/getBugImage";
-import AnimatedRiskGauge from "./AnimatedRiskGauge";
-import SeasonalRiskGauge from "./SeasonalRiskGauge"; // ✅ NEW interactive gauge
+import React, { useEffect, useState } from "react";
 
-export default function BugDetail({ bug, back }) {
-  if (!bug) return null;
+export default function AnimatedRiskGauge({ value, score }) {
+  // Accept either `score` (dashboard) OR `value` (bug detail)
+  const input = score !== undefined ? score : value !== undefined ? value : 0;
 
-  const {
-    name,
-    description,
-    facts = [],
-    products = [],
-    bitePhotos = [],
-    seasonalActivity = {},
-  } = bug;
+  const [fill, setFill] = useState(0);
 
-  // ⭐ Interactive seasonal month state
-  const [activeMonth, setActiveMonth] = useState("Jan");
+  // Allow input from 0–100 (dashboard) or 0–3 (bug detail)
+  const normalized =
+    input <= 3 ? Math.round((input / 3) * 100) : Math.max(0, Math.min(100, input));
 
-  // ⭐ Convert bug.riskLevel (0–3) → gauge score (0–100)
-  const gaugeScore = Math.round((bug.riskLevel / 3) * 100);
+  useEffect(() => {
+    const t = setTimeout(() => setFill(normalized), 150);
+    return () => clearTimeout(t);
+  }, [normalized]);
 
-  const months = Object.keys(seasonalActivity);
+  // Arc fill percent
+  const percent = fill;
+
+  // Color scale
+  const color =
+    percent < 25 ? "#10b981" :        // green
+    percent < 50 ? "#fbbf24" :        // yellow
+    percent < 75 ? "#f97316" :        // orange
+                   "#ef4444";         // red
 
   return (
-    <div className="p-6 pb-24 space-y-6 max-w-xl mx-auto">
+    <div className="flex flex-col items-center">
+      <svg width="180" height="100" viewBox="0 0 180 100">
 
-      {/* BACK BUTTON */}
-      <button
-        onClick={back}
-        className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        <span className="font-medium">Back to Bug List</span>
-      </button>
+        {/* Background arc */}
+        <path
+          d="M10 100 A80 80 0 0 1 170 100"
+          stroke="#1f2937"
+          strokeWidth="18"
+          fill="none"
+          strokeLinecap="round"
+        />
 
-      {/* HERO IMAGE */}
-      <img
-        src={getBugImage(bug)}
-        alt={name}
-        className="w-full h-56 object-cover rounded-xl border border-slate-700 shadow-lg"
-        onError={(e) => (e.target.src = "/images/fallback-bug.png")}
-      />
+        {/* Animated value arc */}
+        <path
+          d="M10 100 A80 80 0 0 1 170 100"
+          stroke={color}
+          strokeWidth="18"
+          fill="none"
+          strokeLinecap="round"
+          style={{
+            strokeDasharray: "250",
+            strokeDashoffset: 250 - (250 * percent) / 100,
+            transition: "stroke-dashoffset 1s ease, stroke 0.3s ease",
+          }}
+        />
 
-      {/* TITLE */}
-      <h1 className="text-2xl font-bold text-white">{name}</h1>
-      <p className="text-slate-300">{description}</p>
+        {/* Needle */}
+        <line
+          x1="90"
+          y1="100"
+          x2={90 + 70 * Math.cos(Math.PI * (1 - percent / 100))}
+          y2={100 - 70 * Math.sin(Math.PI * (1 - percent / 100))}
+          stroke="#fff"
+          strokeWidth="4"
+          strokeLinecap="round"
+          style={{ transition: "1s ease" }}
+        />
 
-      {/* BITE SEVERITY GAUGE */}
-      <div className="mt-6">
-        <h3 className="text-white font-semibold mb-2">Bite Severity</h3>
-        <AnimatedRiskGauge score={gaugeScore} />
-      </div>
+        {/* Center cap */}
+        <circle cx="90" cy="100" r="6" fill="#fff" />
+      </svg>
 
-      {/* ⭐ NEW INTERACTIVE SEASONAL ACTIVITY ⭐ */}
-      <div className="mt-8">
-        <h3 className="text-white font-semibold mb-3">Seasonal Activity</h3>
-
-        {/* Month selector */}
-        <div className="grid grid-cols-6 gap-2 mb-4">
-          {months.map((m) => (
-            <button
-              key={m}
-              onClick={() => setActiveMonth(m)}
-              className={`
-                px-2 py-1 rounded text-xs transition
-                ${activeMonth === m 
-                  ? "bg-emerald-600 text-white" 
-                  : "bg-slate-700 text-slate-300"}
-              `}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
-
-        {/* Interactive gauge changes when month is tapped */}
-        <div className="flex justify-center">
-          <SeasonalRiskGauge level={seasonalActivity[activeMonth]} />
-        </div>
-      </div>
-
-      {/* FACTS */}
-      {facts.length > 0 && (
-        <div>
-          <h3 className="text-white font-semibold mb-2">Did You Know?</h3>
-          <ul className="list-disc list-inside space-y-1 text-slate-300">
-            {facts.map((fact, i) => (
-              <li key={i}>{fact}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* BITE PHOTOS */}
-      {bitePhotos.length > 0 && (
-        <div>
-          <h3 className="text-white font-semibold mb-2">Bite Examples</h3>
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {bitePhotos.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt="bite example"
-                className="h-24 w-24 object-cover rounded-lg border border-slate-700 shadow-md"
-                onError={(e) => (e.target.src = "/images/fallback-bite.png")}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* PRODUCTS */}
-      {products.length > 0 && (
-        <div>
-          <h3 className="text-white font-semibold mb-2">
-            Recommended PESKY® Products
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {products.map((p, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 bg-emerald-600/20 text-emerald-300 border border-emerald-500 rounded-full text-sm"
-              >
-                {p}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Label */}
+      <p className="text-slate-300 text-sm mt-1">
+        Severity:{" "}
+        <span className="font-semibold" style={{ color }}>
+          {percent < 25
+            ? "Low"
+            : percent < 50
+            ? "Moderate"
+            : percent < 75
+            ? "High"
+            : "Severe"}
+        </span>
+      </p>
     </div>
   );
 }
