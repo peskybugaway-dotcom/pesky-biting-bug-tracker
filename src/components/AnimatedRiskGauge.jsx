@@ -1,16 +1,12 @@
 import React from "react";
 
 export default function AnimatedRiskGauge({ value }) {
-  // Normalize value to 0-3 range
-  const displayValue = Math.min(Math.max(value, 0), 3);
-  const percentage = (displayValue / 3) * 100;
-  
-  // Math for a perfect 180-degree half-circle
-  const radius = 40;
+  const percentage = (Math.min(value, 3) / 3) * 100;
+  // Standard SVG circle math
+  const radius = 36;
   const circumference = Math.PI * radius; 
-  const dashOffset = circumference - (percentage / 100) * circumference;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
-  // Determine color based on risk level
   const getColor = (v) => {
     if (v >= 3) return "#ef4444"; // Red
     if (v >= 2) return "#f97316"; // Orange
@@ -18,31 +14,31 @@ export default function AnimatedRiskGauge({ value }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-24 h-16 relative">
-      <svg viewBox="0 0 100 55" className="w-full h-full">
-        {/* Background Track (Dark Gray) */}
-        <path 
-          d="M 10 50 A 40 40 0 0 1 90 50" 
-          fill="none" 
-          stroke="#1e293b" 
-          strokeWidth="10" 
-          strokeLinecap="round" 
-        />
-        {/* Colored Progress Bar */}
+    <div className="flex flex-col items-center justify-center w-24 h-16 relative mt-2">
+      <svg viewBox="0 0 100 55" className="w-full h-full transform translate-y-1">
+        {/* Gray Background Track */}
         <path
-          d="M 10 50 A 40 40 0 0 1 90 50"
+          d="M 14 50 A 36 36 0 0 1 86 50"
           fill="none"
-          stroke={getColor(displayValue)}
-          strokeWidth="10"
+          stroke="#1e293b"
+          strokeWidth="8"
+          strokeLinecap="round"
+        />
+        {/* Animated Progress Track */}
+        <path
+          d="M 14 50 A 36 36 0 0 1 86 50"
+          fill="none"
+          stroke={getColor(value)}
+          strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={circumference}
-          strokeDashoffset={dashOffset}
-          style={{ transition: "stroke-dashoffset 1s ease-out" }}
+          strokeDashoffset={strokeDashoffset}
+          className="transition-all duration-1000 ease-out"
         />
       </svg>
-      {/* The Number in the center */}
-      <div className="absolute bottom-0 text-white font-black text-lg">
-        {displayValue}
+      {/* The number centered under the arc */}
+      <div className="absolute bottom-1 flex flex-col items-center">
+        <span className="text-white font-black text-xl leading-none">{value}</span>
       </div>
     </div>
   );
