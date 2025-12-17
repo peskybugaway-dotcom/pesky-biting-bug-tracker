@@ -1,83 +1,66 @@
 import React, { useEffect, useState } from "react";
 
-export default function AnimatedRiskGauge({ value = 0 }) {
-  const [display, setDisplay] = useState(0);
+export default function AnimatedRiskGauge({ value, score }) {
+  // Accept BOTH props for compatibility
+  const raw = score ?? value ?? 0;
 
-  // Normalize 0–100 → 0–3 scale for severity color + label
-  const severity = Math.min(3, Math.max(0, Math.floor((value / 100) * 3)));
+  // Always convert 0–100 safely
+  const safeValue = Math.max(0, Math.min(100, raw));
 
-  // Animate the gauge fill
+  const [fill, setFill] = useState(0);
+
+  // Animate needle
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDisplay(value);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [value]);
+    const t = setTimeout(() => setFill(safeValue), 120);
+    return () => clearTimeout(t);
+  }, [safeValue]);
 
-  // Convert percent to stroke amount
-  const percent = Math.min(100, Math.max(0, display));
-  const strokeLength = 250;
-  const offset = strokeLength - (strokeLength * percent) / 100;
+  // Angle: -90° → +90° semicircle
+  const angle = (fill / 100) * 180 - 90;
 
-  // Needle angle, 0–100 mapped to -90° → +90°
-  const angle = (percent / 100) * 180 - 90;
-
-  // Severity color
-  const colors = ["#10b981", "#fbbf24", "#f97316", "#ef4444"];
-  const color = colors[severity];
-
-  const labels = ["Low", "Moderate", "High", "Severe"];
+  // Colors
+  const zoneColor =
+    fill < 25 ? "#10b981" :     // green
+    fill < 50 ? "#eab308" :     // yellow
+    fill < 75 ? "#f97316" :     // orange
+               "#ef4444";       // red
 
   return (
     <div className="flex flex-col items-center">
-      <svg width="200" height="120" viewBox="0 0 200 120">
-
-        {/* BACK ARC */}
+      <svg width="180" height="100" viewBox="0 0 180 100">
+        {/* Background arc */}
         <path
-          d="M20 100 A80 80 0 0 1 180 100"
+          d="M10 100 A80 80 0 0 1 170 100"
           stroke="#1f2937"
           strokeWidth="18"
           fill="none"
           strokeLinecap="round"
         />
 
-        {/* PROGRESS ARC */}
-        <path
-          d="M20 100 A80 80 0 0 1 180 100"
-          stroke={color}
-          strokeWidth="18"
-          fill="none"
-          strokeLinecap="round"
-          style={{
-            strokeDasharray: strokeLength,
-            strokeDashoffset: offset,
-            transition: "stroke-dashoffset 1s ease, stroke 0.3s ease",
-          }}
-        />
+        {/* Colored segments */}
+        <path d="M10 100 A80 80 0 0 1 55 100" stroke="#10b981" strokeWidth="12" fill="none" />
+        <path d="M55 100 A80 80 0 0 1 100 100" stroke="#eab308" strokeWidth="12" fill="none" />
+        <path d="M100 100 A80 80 0 0 1 145 100" stroke="#f97316" strokeWidth="12" fill="none" />
+        <path d="M145 100 A80 80 0 0 1 170 100" stroke="#ef4444" strokeWidth="12" fill="none" />
 
-        {/* NEEDLE */}
+        {/* Needle */}
         <line
-          x1="100"
+          x1="90"
           y1="100"
-          x2={100 + 70 * Math.cos((Math.PI / 180) * angle)}
-          y2={100 + 70 * Math.sin((Math.PI / 180) * angle)}
+          x2={90 + 70 * Math.cos((angle * Math.PI) / 180)}
+          y2={100 - 70 * Math.sin((angle * Math.PI) / 180)}
           stroke="#ffffff"
           strokeWidth="4"
           strokeLinecap="round"
-          style={{ transition: "1s ease" }}
+          style={{ transition: "transform 0.7s ease", transformOrigin: "center" }}
         />
 
-        {/* CENTER CAP */}
-        <circle cx="100" cy="100" r="6" fill="#ffffff" />
+        {/* Center cap */}
+        <circle cx="90" cy="100" r="6" fill="#ffffff" />
       </svg>
 
-      {/* LABEL */}
       <p className="text-slate-300 text-sm mt-1">
-        Risk:{" "}
-        <span className="font-bold" style={{ color }}>
-          {labels[severity]}
-        </span>{" "}
-        ({percent}%)
+        Risk Level: <span style={{ color: zoneColor }}>{Math.round(fill)}%</span>
       </p>
     </div>
   );
