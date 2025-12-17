@@ -1,57 +1,96 @@
 import React, { useEffect, useState } from "react";
 
 export default function AnimatedRiskGauge({ value = 0 }) {
-  const [display, setDisplay] = useState(0);
+  // Animated progress value
+  const [progress, setProgress] = useState(0);
 
-  // Normalize 0–100 → 0–3 scale for severity color + label
-  const severity = Math.min(3, Math.max(0, Math.floor((value / 100) * 3)));
-
-  // Animate the gauge fill
+  // Animate after mount/update
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDisplay(value);
-    }, 100);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setProgress(value), 100);
+    return () => clearTimeout(t);
   }, [value]);
 
-  // Convert percent to stroke amount
-  const percent = Math.min(100, Math.max(0, display));
-  const strokeLength = 250;
-  const offset = strokeLength - (strokeLength * percent) / 100;
+  // Clamp 0–100
+  const pct = Math.max(0, Math.min(100, progress));
 
-  // Needle angle, 0–100 mapped to -90° → +90°
-  const angle = (percent / 100) * 180 - 90;
+  // Convert 0–100 → -90° to +90°
+  const angle = (pct / 100) * 180 - 90;
 
-  // Severity color
-  const colors = ["#10b981", "#fbbf24", "#f97316", "#ef4444"];
-  const color = colors[severity];
+  // Severity bands
+  const severityIndex = Math.min(3, Math.floor((pct / 100) * 4));
+  const severityLabels = ["Low", "Moderate", "High", "Severe"];
+  const severityColors = ["#10b981", "#fbbf24", "#f97316", "#ef4444"];
+  const severity = severityLabels[severityIndex];
+  const color = severityColors[severityIndex];
 
-  const labels = ["Low", "Moderate", "High", "Severe"];
+  // Segment path helper (center: 100,100 radius: 80)
+  function arc(startAngle, endAngle) {
+    const r = 80;
+    const cx = 100;
+    const cy = 100;
+
+    const start = {
+      x: cx + r * Math.cos((Math.PI / 180) * startAngle),
+      y: cy + r * Math.sin((Math.PI / 180) * startAngle),
+    };
+    const end = {
+      x: cx + r * Math.cos((Math.PI / 180) * endAngle),
+      y: cy + r * Math.sin((Math.PI / 180) * endAngle),
+    };
+
+    return `M ${start.x} ${start.y} A ${r} ${r} 0 0 1 ${end.x} ${end.y}`;
+  }
 
   return (
     <div className="flex flex-col items-center">
-      <svg width="200" height="120" viewBox="0 0 200 120">
+      <svg width="220" height="130" viewBox="0 0 220 130">
 
-        {/* BACK ARC */}
+        {/* BACKGROUND COLOR SEGMENTS */}
+        {/* Green 0–25% */}
         <path
-          d="M20 100 A80 80 0 0 1 180 100"
-          stroke="#1f2937"
-          strokeWidth="18"
+          d={arc(180, 135)}
+          stroke="#10b981"
+          strokeWidth="16"
           fill="none"
           strokeLinecap="round"
         />
 
-        {/* PROGRESS ARC */}
+        {/* Yellow 25–50% */}
         <path
-          d="M20 100 A80 80 0 0 1 180 100"
-          stroke={color}
-          strokeWidth="18"
+          d={arc(135, 90)}
+          stroke="#eab308"
+          strokeWidth="16"
+          fill="none"
+          strokeLinecap="round"
+        />
+
+        {/* Orange 50–75% */}
+        <path
+          d={arc(90, 45)}
+          stroke="#f97316"
+          strokeWidth="16"
+          fill="none"
+          strokeLinecap="round"
+        />
+
+        {/* Red 75–100% */}
+        <path
+          d={arc(45, 0)}
+          stroke="#ef4444"
+          strokeWidth="16"
+          fill="none"
+          strokeLinecap="round"
+        />
+
+        {/* PROGRESS ARC (white overlay) */}
+        <path
+          d={arc(180, 180 - (pct * 180) / 100)}
+          stroke="#ffffff"
+          strokeWidth="10"
           fill="none"
           strokeLinecap="round"
           style={{
-            strokeDasharray: strokeLength,
-            strokeDashoffset: offset,
-            transition: "stroke-dashoffset 1s ease, stroke 0.3s ease",
+            transition: "1s ease",
           }}
         />
 
@@ -75,9 +114,9 @@ export default function AnimatedRiskGauge({ value = 0 }) {
       <p className="text-slate-300 text-sm mt-1">
         Risk:{" "}
         <span className="font-bold" style={{ color }}>
-          {labels[severity]}
+          {severity}
         </span>{" "}
-        ({percent}%)
+        ({pct}%)
       </p>
     </div>
   );
