@@ -13,11 +13,16 @@ export default function App() {
   const [selectedBug, setSelectedBug] = useState(null);
   const [timeMode, setTimeMode] = useState("day");
 
-  // 🌅 Time of day logic
+  // Handle Tab changes and clear selected bug to prevent "view-locking"
+  const handleTabChange = (newTab) => {
+    setSelectedBug(null); 
+    setTab(newTab);
+  };
+
+  // 🌅 Time of day logic for dynamic theme
   useEffect(() => {
     function determineTimeMode() {
       const hour = new Date().getHours();
-
       if (hour >= 5 && hour < 8) setTimeMode("sunrise");
       else if (hour >= 8 && hour < 17) setTimeMode("day");
       else if (hour >= 17 && hour < 20) setTimeMode("sunset");
@@ -25,87 +30,54 @@ export default function App() {
     }
 
     determineTimeMode();
-    const timer = setInterval(determineTimeMode, 300000);
+    const timer = setInterval(determineTimeMode, 300000); // Update every 5 mins
     return () => clearInterval(timer);
   }, []);
 
-  // 🎨 Header gradients
+  // 🎨 Header gradients based on timeMode
   const headerStyles = {
-    sunrise: "from-orange-500/60 to-amber-500/40 border-amber-400",
-    day: "from-emerald-600/40 to-sky-500/30 border-emerald-500",
-    sunset: "from-red-500/60 to-orange-600/40 border-red-500",
-    night: "from-indigo-700/40 to-slate-900/40 border-indigo-400",
+    sunrise: "from-orange-600 to-amber-500 border-amber-400",
+    day: "from-emerald-700 to-sky-600 border-emerald-500",
+    sunset: "from-red-600 to-orange-600 border-red-500",
+    night: "from-indigo-900 to-slate-900 border-indigo-400",
   };
 
-  // 🎛 Screen routing
+  // 🎛 Main Routing Logic
   const renderScreen = () => {
-    // Show bug detail view if selected
+    // 1. If a bug is clicked, show Detail View regardless of current tab
     if (selectedBug) {
       return (
-        <BugDetail bug={selectedBug} back={() => setSelectedBug(null)} />
+        <BugDetail 
+          bug={selectedBug} 
+          onBack={() => setSelectedBug(null)} 
+        />
       );
     }
 
+    // 2. Otherwise, show the active tab
     switch (tab) {
       case "dashboard":
-        return <Dashboard />;
-
+        return <Dashboard onSelectBug={setSelectedBug} />;
       case "guide":
         return <Guide />;
-
       case "protection":
         return <Protection />;
-
       case "map":
         return <MapView />;
-
       case "bugs":
-        return (
-          <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />
-        );
-
+        return <BugEncyclopedia onSelectBug={setSelectedBug} />;
       default:
-        return <Dashboard />;
+        return <Dashboard onSelectBug={setSelectedBug} />;
     }
   };
 
   return (
-    <div className="min-h-screen pb-24">
-
+    <div className="min-h-screen bg-slate-950 pb-24 selection:bg-emerald-500/30">
+      
       {/* Header */}
       <header
         className={`
           fixed top-0 left-0 w-full 
-          backdrop-blur-md shadow-lg z-50
+          backdrop-blur-xl shadow-2xl z-[100]
           bg-gradient-to-r ${headerStyles[timeMode]}
-          border-b
-        `}
-      >
-        <div className="max-w-xl mx-auto flex items-center gap-3 p-4">
-          <div className="bg-emerald-600 p-2 rounded-lg shadow-md">
-            <Bug className="text-white w-6 h-6" />
-          </div>
-
-          <div>
-            <h1 className="text-lg font-bold text-white tracking-wide">
-              PESKY® Bug Tracker
-            </h1>
-            <p className="text-xs text-slate-200 -mt-1">
-              {timeMode === "sunrise" && "Sunrise — early bug activity forming"}
-              {timeMode === "day" && "Daytime — activity varies"}
-              {timeMode === "sunset" && "Sunset — peak insect activity"}
-              {timeMode === "night" && "Night — no-see-ums most active"}
-            </p>
-          </div>
-        </div>
-      </header>
-
-      {/* Page content below header */}
-      <div className="pt-24">
-        {renderScreen()}
-      </div>
-
-      <BottomNav tab={tab} setTab={setTab} />
-    </div>
-  );
-}
+          border-b border
