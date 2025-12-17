@@ -1,55 +1,52 @@
 import React from "react";
 import AnimatedRiskGauge from "./AnimatedRiskGauge";
-import { AlertTriangle, MapPin, Shield } from "lucide-react";
+import { AlertCircle, MapPin, Shield } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="p-4 space-y-6 max-w-xl mx-auto">
-      {/* Risk Card matching your provided project style */}
-      <div className="bg-slate-800/70 backdrop-blur-sm rounded-3xl shadow-2xl border border-emerald-800 p-6">
+    <div className="p-4 pt-8 space-y-6 max-w-md mx-auto">
+      {/* Risk Card */}
+      <div className="bg-slate-900 border-2 border-emerald-500/20 rounded-[2.5rem] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h2 className="text-xl font-bold text-emerald-300 flex items-center gap-2 uppercase tracking-tight">
-              Current Risk Profile
-            </h2>
-            <div className="flex items-center gap-1.5 text-slate-400 mt-1">
-              <MapPin size={12} />
-              <p className="text-xs font-semibold">North Port, FL</p>
+            <div className="flex items-center gap-1 text-emerald-500 font-bold text-[10px] uppercase tracking-widest mb-1">
+              <MapPin size={10} /> North Port, FL
             </div>
+            <h2 className="text-white font-black text-2xl uppercase tracking-tighter">Daily Risk</h2>
           </div>
-          <AlertTriangle className="text-orange-500" size={24} />
+          <AlertCircle className="text-red-500 animate-pulse" size={24} />
         </div>
 
-        {/* Gauges Section */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="flex flex-col items-center p-2 bg-slate-900/40 rounded-2xl border border-white/5">
+        {/* The 3 Gauges */}
+        <div className="grid grid-cols-3 gap-2 bg-black/40 p-4 rounded-3xl border border-white/5">
+          <div className="text-center">
             <AnimatedRiskGauge value={3} />
-            <span className="text-[10px] font-bold text-slate-400 uppercase mt-2">Mosquito</span>
+            <p className="text-[8px] font-black text-slate-500 uppercase mt-1">Mosquito</p>
           </div>
-          <div className="flex flex-col items-center p-2 bg-slate-900/40 rounded-2xl border border-white/5">
+          <div className="text-center">
             <AnimatedRiskGauge value={1} />
-            <span className="text-[10px] font-bold text-slate-400 uppercase mt-2">Tick</span>
+            <p className="text-[8px] font-black text-slate-500 uppercase mt-1">Tick</p>
           </div>
-          <div className="flex flex-col items-center p-2 bg-slate-900/40 rounded-2xl border border-white/5">
+          <div className="text-center">
             <AnimatedRiskGauge value={2} />
-            <span className="text-[10px] font-bold text-slate-400 uppercase mt-2">No-See-Um</span>
+            <p className="text-[8px] font-black text-slate-500 uppercase mt-1">No-See-Um</p>
           </div>
         </div>
       </div>
-      
-      {/* Action Card */}
-      <div className="bg-emerald-700 rounded-3xl p-6 flex items-center justify-between shadow-lg border-b-4 border-emerald-900">
-        <div className="flex items-center gap-4">
-          <div className="bg-emerald-600 p-3 rounded-2xl shadow-inner">
+
+      {/* Extreme Activity Card */}
+      <div className="bg-emerald-600 rounded-[2rem] p-5 flex items-center justify-between shadow-lg shadow-emerald-900/40">
+        <div className="flex items-center gap-3">
+          <div className="bg-white/20 p-2.5 rounded-2xl">
             <Shield className="text-white" size={24} />
           </div>
           <div className="text-left">
-            <h3 className="text-white font-black text-sm uppercase">Extreme Activity</h3>
-            <p className="text-emerald-200 text-[10px] font-medium leading-tight">Apply repellent before heading out.</p>
+            <h3 className="text-white font-black text-xs uppercase">Extreme Activity</h3>
+            <p className="text-emerald-100 text-[10px] font-medium leading-tight">Apply repellent now.</p>
           </div>
         </div>
-        <button className="bg-white text-emerald-800 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-emerald-50 transition-colors shadow-md">
-          REPELLENTS
+        <button className="bg-white text-emerald-800 px-4 py-2 rounded-xl font-black text-[10px] uppercase active:scale-90 transition-transform">
+          Repellents
         </button>
       </div>
     </div>
