@@ -1,26 +1,56 @@
 import React from "react";
+import AnimatedRiskGauge from "./AnimatedRiskGauge";
+import { AlertCircle, MapPin, Shield } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="p-8">
-      <div className="bg-emerald-900 border-2 border-emerald-400 p-10 rounded-[3rem] shadow-2xl text-center">
-        <h2 className="text-white font-black text-3xl uppercase tracking-tighter mb-4">
-          SYSTEM CHECK
-        </h2>
-        <p className="text-emerald-400 font-bold text-sm uppercase tracking-widest">
-          If you see this, Dashboard.jsx is connected correctly.
-        </p>
-        <div className="mt-8 grid grid-cols-3 gap-4">
-          <div className="bg-slate-900 p-4 rounded-2xl border border-white/10">
-            <div className="text-white text-2xl font-black">3</div>
+    <div className="p-4 space-y-6 max-w-xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* Risk Summary Card */}
+      <div className="bg-slate-900/80 border border-white/5 rounded-[2.5rem] p-6 shadow-2xl backdrop-blur-md">
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h2 className="text-white font-black text-2xl tracking-tighter uppercase leading-none">Daily Risk</h2>
+            <div className="flex items-center gap-1.5 text-emerald-400 mt-2">
+              <MapPin size={10} />
+              <p className="text-[10px] font-bold tracking-[0.2em] uppercase">North Port, FL</p>
+            </div>
           </div>
-          <div className="bg-slate-900 p-4 rounded-2xl border border-white/10">
-            <div className="text-white text-2xl font-black">1</div>
-          </div>
-          <div className="bg-slate-900 p-4 rounded-2xl border border-white/10">
-            <div className="text-white text-2xl font-black">2</div>
+          <div className="bg-red-500/20 p-2.5 rounded-2xl border border-red-500/30">
+            <AlertCircle size={20} className="text-red-500" />
           </div>
         </div>
+
+        {/* The 3 Gauges */}
+        <div className="flex justify-between items-end gap-1 px-2">
+          <div className="flex flex-col items-center">
+            <AnimatedRiskGauge value={3} />
+            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-3">Mosquito</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <AnimatedRiskGauge value={1} />
+            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-3">Tick</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <AnimatedRiskGauge value={2} />
+            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-3">No-See-Um</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Action/Protection Card */}
+      <div className="bg-emerald-600 rounded-[2rem] p-5 flex items-center justify-between shadow-lg shadow-emerald-900/20">
+        <div className="flex items-center gap-4 text-left">
+          <div className="bg-white/20 p-3 rounded-2xl">
+            <Shield className="text-white" size={24} />
+          </div>
+          <div>
+            <h3 className="text-white font-black text-sm uppercase tracking-tight">Stay Protected</h3>
+            <p className="text-emerald-100 text-[10px] font-medium opacity-90 leading-tight">Activity is Extreme today.</p>
+          </div>
+        </div>
+        <button className="bg-white text-emerald-700 px-4 py-2.5 rounded-xl font-black text-[9px] tracking-widest uppercase shadow-sm active:scale-95 transition-transform">
+          Repellents
+        </button>
       </div>
     </div>
   );
