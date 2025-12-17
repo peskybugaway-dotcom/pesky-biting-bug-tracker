@@ -9,43 +9,28 @@ export default function App() {
   const [tab, setTab] = useState("dashboard"); 
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-emerald-500/30">
-      {/* 1. HEADER: Hidden ONLY when a bug is selected to give more room */}
+    <div className="min-h-screen bg-slate-950 text-slate-100">
       {!selectedBug && (
-        <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl border-b border-emerald-600">
+        <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl">
           <h1 className="text-white font-black text-center text-xl tracking-tighter uppercase">PESKY®</h1>
         </header>
       )}
 
-      {/* 2. MAIN CONTENT AREA */}
       <main className={!selectedBug ? "pt-20 pb-24" : ""}>
-        {/* IF A BUG IS SELECTED: Show ONLY the detail page */}
         {selectedBug ? (
-          <BugDetail 
-            bug={selectedBug} 
-            onBack={() => setSelectedBug(null)} 
-          />
+          <BugDetail bug={selectedBug} onBack={() => setSelectedBug(null)} />
         ) : (
-          /* IF NO BUG IS SELECTED: Show the Tabs */
-          <>
+          <div className="animate-in fade-in duration-300">
             {tab === "dashboard" && <Dashboard />}
-            
-            {tab === "bugs" && (
-              <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />
-            )}
-            
-            {/* Simple Placeholders for other tabs */}
-            {tab === "map" && <div className="flex items-center justify-center h-[60vh] text-slate-500 font-black text-[10px] tracking-widest uppercase">Map Coming Soon</div>}
-            {tab === "protection" && <div className="flex items-center justify-center h-[60vh] text-slate-500 font-black text-[10px] tracking-widest uppercase">Shield Coming Soon</div>}
-            {tab === "guide" && <div className="flex items-center justify-center h-[60vh] text-slate-500 font-black text-[10px] tracking-widest uppercase">Guide Coming Soon</div>}
-          </>
+            {tab === "bugs" && <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />}
+            {tab === "map" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Map Soon</div>}
+            {tab === "protection" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Shield Soon</div>}
+            {tab === "guide" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Guide Soon</div>}
+          </div>
         )}
       </main>
 
-      {/* 3. BOTTOM NAVIGATION: Hidden when viewing bug details */}
-      {!selectedBug && (
-        <BottomNav tab={tab} setTab={setTab} />
-      )}
+      {!selectedBug && <BottomNav tab={tab} setTab={setTab} />}
     </div>
   );
 }
