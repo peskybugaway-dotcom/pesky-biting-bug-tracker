@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import AnimatedRiskGauge from "./AnimatedRiskGauge";   // ✅ Updated import
 import PresetManager from "./PresetManager";
+import RiskGauge from "./RiskGauge";
 
 export default function Dashboard() {
   const [temp, setTemp] = useState(82);
