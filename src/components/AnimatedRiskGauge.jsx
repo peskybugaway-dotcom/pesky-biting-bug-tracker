@@ -1,60 +1,47 @@
 import React from "react";
 
-export default function AnimatedRiskGauge({ value }) {
-  // Value comes from bugs.json (0-3)
-  const segments = [
-    { label: "Low", color: "#10b981" },     // 0
-    { label: "Moderate", color: "#eab308" }, // 1
-    { label: "High", color: "#f97316" },     // 2
-    { label: "Severe", color: "#ef4444" }    // 3
-  ];
+export default function AnimatedRiskGauge({ value, label }) {
+  // Map 0-3 to 0-100%
+  const percentage = (value / 3) * 100;
+  const radius = 36;
+  const circumference = Math.PI * radius; // Half circle circumference
+  const dashOffset = circumference - (percentage / 100) * circumference;
 
-  const current = segments[value] || segments[0];
-  const radius = 80;
-  const stroke = 12;
-  const normalizedRadius = radius - stroke * 2;
-  const circumference = normalizedRadius * 2 * Math.PI;
-  
-  // Half circle calculation (divided by 2)
-  const strokeDashoffset = (circumference / 2) - ((value / 3) * (circumference / 2));
+  const getColor = (v) => {
+    if (v >= 3) return "#ef4444"; // Red
+    if (v >= 2) return "#f97316"; // Orange
+    return "#10b981"; // Green
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
-      <div className="relative w-40 h-24 overflow-hidden">
-        <svg height="160" width="160" className="absolute top-0 transform -rotate-180">
+    <div className="flex flex-col items-center">
+      <div className="relative w-24 h-14 overflow-hidden">
+        <svg viewBox="0 0 100 50" className="w-full h-full">
           {/* Background Track */}
-          <circle
+          <path
+            d="M 10 45 A 40 40 0 0 1 90 45"
+            fill="none"
             stroke="#1e293b"
-            fill="transparent"
-            strokeWidth={stroke}
-            strokeDasharray={circumference + ' ' + circumference}
-            style={{ strokeDashoffset: circumference / 2 }}
-            r={normalizedRadius}
-            cx="80"
-            cy="80"
-          />
-          {/* Progress Path */}
-          <circle
-            stroke={current.color}
-            fill="transparent"
-            strokeWidth={stroke}
-            strokeDasharray={circumference + ' ' + circumference}
-            style={{ 
-              strokeDashoffset,
-              transition: 'stroke-dashoffset 1s ease-out, stroke 0.5s ease' 
-            }}
-            r={normalizedRadius}
-            cx="80"
-            cy="80"
+            strokeWidth="8"
             strokeLinecap="round"
           />
+          {/* Active Progress */}
+          <path
+            d="M 10 45 A 40 40 0 0 1 90 45"
+            fill="none"
+            stroke={getColor(value)}
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={dashOffset}
+            className="transition-all duration-1000 ease-out"
+          />
         </svg>
-        
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center">
-          <span className="text-xl font-black text-white">{current.label}</span>
-          <span className="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Risk Level</span>
+        <div className="absolute inset-x-0 bottom-0 text-center">
+          <span className="text-xs font-black text-white">{value}</span>
         </div>
       </div>
+      <p className="text-[8px] font-bold text-slate-500 uppercase mt-1">{label}</p>
     </div>
   );
 }
