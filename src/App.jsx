@@ -6,10 +6,11 @@ import BottomNav from "./components/BottomNav";
 
 export default function App() {
   const [selectedBug, setSelectedBug] = useState(null);
-  const [tab, setTab] = useState("dashboard"); // This matches BottomNav id: "dashboard"
+  const [tab, setTab] = useState("dashboard"); 
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
+      {/* Restore the header only for non-detail views */}
       {!selectedBug && (
         <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl">
           <h1 className="text-white font-black text-center text-xl tracking-tighter">PESKY®</h1>
@@ -22,13 +23,13 @@ export default function App() {
         ) : (
           <>
             {tab === "dashboard" && <Dashboard />}
-            {tab === "bugs" && (
-              <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />
+            {tab === "bugs" && <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />}
+            {/* Minimal placeholders that won't mess up the layout */}
+            {tab !== "dashboard" && tab !== "bugs" && (
+              <div className="flex items-center justify-center h-[60vh] text-slate-500 font-bold uppercase tracking-widest text-xs">
+                Coming Soon
+              </div>
             )}
-            {/* Placeholders for the other buttons */}
-            {tab === "map" && <div className="p-20 text-center text-slate-500 font-bold">MAP COMING SOON</div>}
-            {tab === "protection" && <div className="p-20 text-center text-slate-500 font-bold">SHIELD COMING SOON</div>}
-            {tab === "guide" && <div className="p-20 text-center text-slate-500 font-bold">GUIDE COMING SOON</div>}
           </>
         )}
       </main>
