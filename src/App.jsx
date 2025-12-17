@@ -5,51 +5,40 @@ import Dashboard from "./components/Dashboard";
 import BottomNav from "./components/BottomNav";
 
 export default function App() {
-  // This state controls which bug is being viewed
   const [selectedBug, setSelectedBug] = useState(null);
-  // This state controls which tab is active (Home vs Library)
-  const [activeTab, setActiveTab] = useState("library");
+  const [activeTab, setActiveTab] = useState("home"); // "home" shows Dashboard
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      {/* 1. GLOBAL HEADER 
-          We hide this when a bug is selected so the Back Button has space */}
+      {/* HEADER: Only show if we aren't looking at a specific bug */}
       {!selectedBug && (
         <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl">
-          <h1 className="text-white font-black text-center text-xl uppercase tracking-tighter">
-            PESKY<span className="font-light">®</span>
+          <h1 className="text-white font-black text-center text-xl tracking-tighter">
+            PESKY®
           </h1>
         </header>
       )}
 
-      {/* 2. MAIN CONTENT AREA */}
-      <main className={!selectedBug ? "pt-16 pb-24" : ""}>
+      <main className={!selectedBug ? "pt-20 pb-24" : ""}>
         {selectedBug ? (
-          /* SHOW BUG DETAILS */
+          /* 1. DETAIL VIEW (Highest Priority) */
           <BugDetail 
             bug={selectedBug} 
-            onBack={() => {
-              console.log("Returning to list...");
-              setSelectedBug(null);
-            }} 
+            onBack={() => setSelectedBug(null)} 
           />
         ) : (
-          /* SHOW TABS (DASHBOARD OR LIBRARY) */
+          /* 2. TAB SELECTION */
           <>
             {activeTab === "home" ? (
-              <Dashboard />
+              <Dashboard /> 
             ) : (
-              <BugEncyclopedia onSelectBug={(bug) => {
-                console.log("Selected Bug:", bug.name);
-                setSelectedBug(bug);
-              }} />
+              <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />
             )}
           </>
         )}
       </main>
 
-      {/* 3. NAVIGATION 
-          Hide the bottom nav when looking at a specific bug for a cleaner look */}
+      {/* 3. BOTTOM NAV: Controlled by setActiveTab */}
       {!selectedBug && (
         <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
       )}
