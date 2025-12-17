@@ -1,73 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-/**
- * WORKING segmented risk gauge for 0–100 values.
- * - 4 color zones (green, yellow, orange, red)
- * - Smooth animated needle
- * - Animated white progress arc
- * - Guaranteed Vercel-safe
- */
-export default function AnimatedRiskGauge({ score = 0 }) {
-  const [animated, setAnimated] = useState(0);
+export default function AnimatedRiskGauge({ value = 0 }) {
+  const [display, setDisplay] = useState(0);
 
-  // Smooth animation on update
+  // Normalize 0–100 → 0–3 scale for severity color + label
+  const severity = Math.min(3, Math.max(0, Math.floor((value / 100) * 3)));
+
+  // Animate the gauge fill
   useEffect(() => {
-    const t = setTimeout(() => setAnimated(score), 50);
-    return () => clearTimeout(t);
-  }, [score]);
+    const timer = setTimeout(() => {
+      setDisplay(value);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [value]);
 
-  // Clamp 0–100
-  const pct = Math.max(0, Math.min(100, animated));
+  // Convert percent to stroke amount
+  const percent = Math.min(100, Math.max(0, display));
+  const strokeLength = 250;
+  const offset = strokeLength - (strokeLength * percent) / 100;
 
-  // Needle rotation (-90° to +90°)
-  const angle = (pct / 100) * 180 - 90;
+  // Needle angle, 0–100 mapped to -90° → +90°
+  const angle = (percent / 100) * 180 - 90;
 
-  // Severity zones
-  const zones = [
-    { limit: 25, color: "#10b981", label: "Low" },       // green
-    { limit: 50, color: "#eab308", label: "Moderate" },  // yellow
-    { limit: 75, color: "#f97316", label: "High" },       // orange
-    { limit: 100, color: "#ef4444", label: "Severe" },    // red
-  ];
+  // Severity color
+  const colors = ["#10b981", "#fbbf24", "#f97316", "#ef4444"];
+  const color = colors[severity];
 
-  const zone = zones.find((z) => pct <= z.limit);
-
-  /** Build arc path for segments */
-  const arc = (start, end) => {
-    const r = 80;
-    const cx = 100;
-    const cy = 100;
-
-    const sa = (Math.PI / 180) * start;
-    const ea = (Math.PI / 180) * end;
-
-    const x1 = cx + r * Math.cos(sa);
-    const y1 = cy + r * Math.sin(sa);
-    const x2 = cx + r * Math.cos(ea);
-    const y2 = cy + r * Math.sin(ea);
-
-    return `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`;
-  };
+  const labels = ["Low", "Moderate", "High", "Severe"];
 
   return (
-    <div className="flex flex-col items-center select-none">
-      <svg width="240" height="140" viewBox="0 0 200 120">
+    <div className="flex flex-col items-center">
+      <svg width="200" height="120" viewBox="0 0 200 120">
 
-        {/* SEGMENTED BACKGROUND */}
-        <path d={arc(180, 135)} stroke="#10b981" strokeWidth="16" fill="none" strokeLinecap="round" />
-        <path d={arc(135, 90)} stroke="#eab308" strokeWidth="16" fill="none" strokeLinecap="round" />
-        <path d={arc(90, 45)} stroke="#f97316" strokeWidth="16" fill="none" strokeLinecap="round" />
-        <path d={arc(45, 0)} stroke="#ef4444" strokeWidth="16" fill="none" strokeLinecap="round" />
-
-        {/* ANIMATED WHITE ARC */}
+        {/* BACK ARC */}
         <path
-          d={arc(180, 180 - (pct * 180) / 100)}
-          stroke="#ffffff"
-          strokeWidth="10"
-          strokeLinecap="round"
+          d="M20 100 A80 80 0 0 1 180 100"
+          stroke="#1f2937"
+          strokeWidth="18"
           fill="none"
+          strokeLinecap="round"
+        />
+
+        {/* PROGRESS ARC */}
+        <path
+          d="M20 100 A80 80 0 0 1 180 100"
+          stroke={color}
+          strokeWidth="18"
+          fill="none"
+          strokeLinecap="round"
           style={{
-            transition: "1s ease",
+            strokeDasharray: strokeLength,
+            strokeDashoffset: offset,
+            transition: "stroke-dashoffset 1s ease, stroke 0.3s ease",
           }}
         />
 
@@ -83,12 +67,17 @@ export default function AnimatedRiskGauge({ score = 0 }) {
           style={{ transition: "1s ease" }}
         />
 
-        {/* NEEDLE CENTER */}
+        {/* CENTER CAP */}
         <circle cx="100" cy="100" r="6" fill="#ffffff" />
       </svg>
 
-      <p className="text-white font-semibold text-lg mt-1">
-        {zone.label} Risk ({pct}%)
+      {/* LABEL */}
+      <p className="text-slate-300 text-sm mt-1">
+        Risk:{" "}
+        <span className="font-bold" style={{ color }}>
+          {labels[severity]}
+        </span>{" "}
+        ({percent}%)
       </p>
     </div>
   );
