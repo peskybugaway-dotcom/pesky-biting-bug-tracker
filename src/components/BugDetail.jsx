@@ -1,14 +1,7 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
 import getBugImage from "../utils/getBugImage";
-import AnimatedRiskGauge from "./AnimatedRiskGauge";
-
-const riskColors = {
-  0: "bg-gray-400",
-  1: "bg-green-500",
-  2: "bg-yellow-500",
-  3: "bg-red-500",
-};
+import AnimatedRiskGauge from "./AnimatedRiskGauge"; // your gauge component
 
 export default function BugDetail({ bug, back }) {
   if (!bug) return null;
@@ -21,6 +14,9 @@ export default function BugDetail({ bug, back }) {
     bitePhotos = [],
     seasonalActivity = {},
   } = bug;
+
+  // ✨ Convert 0–3 bug.riskLevel → proper 0–100 gauge score
+  const gaugeScore = Math.round((bug.riskLevel / 3) * 100);
 
   const months = Object.keys(seasonalActivity);
   const values = Object.values(seasonalActivity);
@@ -49,22 +45,13 @@ export default function BugDetail({ bug, back }) {
       <h1 className="text-2xl font-bold text-white">{name}</h1>
       <p className="text-slate-300">{description}</p>
 
-      {/* ANIMATED RISK GAUGE */}
+      {/* 🔥 PERFECTLY CALIBRATED GAUGE */}
       <div className="mt-6">
         <h3 className="text-white font-semibold mb-2">Bite Severity</h3>
-
-        <AnimatedRiskGauge value={bug.riskLevel} />
-
-        {/* Static fallback bar */}
-        <div className="bg-slate-800 h-3 mt-3 rounded-full overflow-hidden border border-slate-600">
-          <div
-            className={`${riskColors[bug.riskLevel]} h-full transition-all`}
-            style={{ width: `${(bug.riskLevel / 3) * 100}%` }}
-          ></div>
-        </div>
+        <AnimatedRiskGauge score={gaugeScore} />
       </div>
 
-      {/* SEASONAL ACTIVITY MINI CHART */}
+      {/* SEASONAL ACTIVITY */}
       <div>
         <h3 className="text-white font-semibold mb-2">Seasonal Activity</h3>
         <div className="grid grid-cols-12 gap-1 text-center">
@@ -109,7 +96,9 @@ export default function BugDetail({ bug, back }) {
                 src={src}
                 alt="bite example"
                 className="h-24 w-24 object-cover rounded-lg border border-slate-700 shadow-md"
-                onError={(e) => (e.target.src = "/images/fallback-bite.png")}
+                onError={(e) =>
+                  (e.target.src = "/images/fallback-bite.png")
+                }
               />
             ))}
           </div>
@@ -134,7 +123,6 @@ export default function BugDetail({ bug, back }) {
           </div>
         </div>
       )}
-
     </div>
   );
 }
