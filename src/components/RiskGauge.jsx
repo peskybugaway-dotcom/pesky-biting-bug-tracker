@@ -1,29 +1,78 @@
 import React from "react";
 
-export default function RiskGauge({ level }) {
-  const colors = ["#22c55e", "#facc15", "#f97316", "#ef4444"];
-  const labels = ["Low", "Moderate", "High", "Severe"];
+export default function RiskGauge({ score = 0 }) {
+  // Clamp score between 0–100
+  const value = Math.max(0, Math.min(100, score));
 
-  const percent = (level / 3) * 100;
+  // Convert 0–100 → -90° to +90° needle rotation
+  const angle = (value / 100) * 180 - 90;
+
+  // Gauge color based on value
+  const getColor = () => {
+    if (value < 25) return "text-green-400";
+    if (value < 50) return "text-yellow-400";
+    if (value < 75) return "text-orange-400";
+    return "text-red-500";
+  };
 
   return (
-    <div className="w-full bg-slate-800 rounded-lg p-4 shadow-lg border border-slate-700">
-      <p className="text-slate-300 text-sm mb-2 font-medium">Risk Level</p>
+    <div className="w-full flex flex-col items-center space-y-2">
 
-      <div className="relative w-full h-3 bg-slate-700 rounded-full overflow-hidden">
+      {/* TITLE */}
+      <h3 className="text-white font-semibold text-lg tracking-wide">
+        Current Bite Risk
+      </h3>
+
+      {/* GAUGE CONTAINER */}
+      <div className="relative w-48 h-24">
+        {/* Background Arc */}
+        <svg viewBox="0 0 100 50" className="w-full h-full">
+          <path
+            d="M10 50 A40 40 0 0 1 90 50"
+            fill="none"
+            stroke="#334155"
+            strokeWidth="10"
+          />
+
+          {/* Colored segments */}
+          <path
+            d="M10 50 A40 40 0 0 1 35 50"
+            fill="none"
+            stroke="#22c55e"
+            strokeWidth="8"
+          />
+          <path
+            d="M35 50 A40 40 0 0 1 60 50"
+            fill="none"
+            stroke="#eab308"
+            strokeWidth="8"
+          />
+          <path
+            d="M60 50 A40 40 0 0 1 90 50"
+            fill="none"
+            stroke="#f97316"
+            strokeWidth="8"
+          />
+        </svg>
+
+        {/* NEEDLE */}
         <div
-          className="absolute top-0 left-0 h-full transition-all duration-700"
-          style={{
-            width: `${percent}%`,
-            backgroundColor: colors[level - 1],
-          }}
+          className="absolute left-1/2 bottom-0 w-1 h-20 bg-white origin-bottom transition-all duration-700 ease-out"
+          style={{ transform: `rotate(${angle}deg)` }}
         ></div>
+
+        {/* CENTER CAP */}
+        <div className="absolute left-1/2 bottom-0 -ml-2 -mb-1 w-4 h-4 bg-white rounded-full border border-slate-600"></div>
       </div>
 
-      <p className="text-center mt-2 text-lg font-bold"
-        style={{ color: colors[level - 1] }}
-      >
-        {labels[level - 1]}
+      {/* SCORE LABEL */}
+      <div className={`text-xl font-bold ${getColor()}`}>
+        {value}% Risk
+      </div>
+
+      {/* Description */}
+      <p className="text-slate-400 text-sm text-center -mt-1">
+        Based on temperature, humidity, and wind conditions
       </p>
     </div>
   );
