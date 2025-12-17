@@ -11,10 +11,9 @@ export default function Dashboard() {
   const [presets, setPresets] = useState(
     JSON.parse(localStorage.getItem("pesky-presets") || "[]")
   );
-
   const [showPresets, setShowPresets] = useState(false);
 
-  // Save a preset
+  // Save preset
   function savePreset() {
     const name = prompt("Enter name for this location:");
     if (!name) return;
@@ -27,8 +26,8 @@ export default function Dashboard() {
   }
 
   // Load preset
-  function loadPreset(index) {
-    const p = presets[index];
+  function loadPreset(i) {
+    const p = presets[i];
     setTemp(p.temp);
     setHumidity(p.humidity);
     setWind(p.wind);
@@ -36,8 +35,8 @@ export default function Dashboard() {
   }
 
   // Delete preset
-  function deletePreset(index) {
-    const updated = presets.filter((_, i) => i !== index);
+  function deletePreset(i) {
+    const updated = presets.filter((_, idx) => idx !== i);
     setPresets(updated);
     localStorage.setItem("pesky-presets", JSON.stringify(updated));
   }
@@ -50,6 +49,7 @@ export default function Dashboard() {
       );
 
       const { latitude, longitude } = pos.coords;
+
       const url =
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}` +
         `&longitude=${longitude}` +
@@ -62,31 +62,35 @@ export default function Dashboard() {
       setHumidity(Math.round(data.current.relative_humidity_2m));
       setWind(Math.round(data.current.wind_speed_10m));
     } catch (err) {
-      alert("Unable to get weather or location.");
+      alert("Unable to access weather data.");
     }
   }
 
-  // ⭐ FINAL FIXED BUG RISK ENGINE
+  // ⭐ ORIGINAL PESKY RISK ENGINE — fixed wind direction
   const score = useMemo(() => {
     let s = 0;
 
-    // Temperature risk
+    // Temperature effect
     if (temp > 92) s += 30;
     else if (temp > 80) s += 20;
     else if (temp > 70) s += 10;
 
-    // Humidity risk
+    // Humidity effect
     if (humidity > 85) s += 35;
     else if (humidity > 70) s += 20;
     else if (humidity > 50) s += 10;
 
-    // ⭐ FIXED WIND LOGIC (correct direction)
-    if (wind <= 2) s += 25;        // calm = high risk
-    else if (wind <= 5) s += 15;   // light breeze
-    else if (wind <= 10) s += 5;   // moderate wind
-    else if (wind > 10) s -= 20;   // strong wind lowers risk
+    // WIND FIX — correct direction
+    // ✔ Calm = highest bug activity
+    // ✔ Light breeze = moderate
+    // ✔ Medium = lower
+    // ✔ Strong wind = lowest
+    if (wind <= 1) s += 30;
+    else if (wind <= 4) s += 20;
+    else if (wind <= 8) s += 5;
+    else if (wind >= 12) s -= 20;
 
-    return Math.max(0, Math.min(100, s));
+    return Math.min(100, Math.max(0, s));
   }, [temp, humidity, wind]);
 
   return (
@@ -102,11 +106,12 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* LOCATION + PRESET BUTTONS */}
+      {/* LOCATION / PRESETS */}
       <div className="pesky-card space-y-3">
         <button
           onClick={fetchWeather}
-          className="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-full text-white shadow"
+          className="w-full px-4 py-2 bg-emerald-600 hover:bg-emerald-700 
+                     rounded-full text-white shadow"
         >
           Use My Location
         </button>
@@ -114,29 +119,30 @@ export default function Dashboard() {
         <div className="flex gap-3">
           <button
             onClick={savePreset}
-            className="flex-1 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white shadow"
+            className="flex-1 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 
+                       rounded-full text-white shadow"
           >
             Save Preset
           </button>
 
           <button
             onClick={() => setShowPresets(true)}
-            className="flex-1 px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-white shadow"
+            className="flex-1 px-3 py-2 bg-slate-700 hover:bg-slate-600 
+                       rounded-full text-white shadow"
           >
             Load Preset
           </button>
         </div>
       </div>
 
-      {/* ⭐ FIXED GAUGE — FULLY WORKING */}
+      {/* ⭐ ORIGINAL STYLE GAUGE — FIXED */}
       <div className="pesky-card flex justify-center p-6">
         <AnimatedRiskGauge value={score} />
       </div>
 
       {/* SLIDERS */}
       <div className="pesky-card space-y-6">
-
-        {/* Temp */}
+        {/* Temperature */}
         <div>
           <label className="flex justify-between text-emerald-300 font-semibold mb-1">
             <span>Temperature</span>
