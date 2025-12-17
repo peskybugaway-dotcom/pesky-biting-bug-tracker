@@ -3,11 +3,23 @@ import { ArrowLeft, ShieldCheck, Info, Zap, Camera, ExternalLink } from "lucide-
 import AnimatedRiskGauge from "./AnimatedRiskGauge";
 
 export default function BugDetail({ bug, onBack }) {
-  const [activeTab, setActiveTab] = useState("bug"); // State to toggle between bug and bite photos
+  const [activeTab, setActiveTab] = useState("bug");
 
   if (!bug) return null;
 
+  // This "pulls" the data out safely
+  const { 
+    name = "Unknown Species", 
+    description = "No description available.", 
+    facts = [], 
+    riskLevel = 0,
+    category = "Pest",
+    type = "Unknown",
+    products = []
+  } = bug;
+
   return (
+     // ... now use 'name' instead of 'bug.name' below
     <div className="min-h-screen bg-slate-950 text-slate-100 pb-20">
       {/* 🖼 HERO IMAGE SECTION */}
       <div className="relative h-80 w-full overflow-hidden">
