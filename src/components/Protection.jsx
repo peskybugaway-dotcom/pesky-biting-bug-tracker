@@ -1,44 +1,45 @@
 import React from "react";
-import { ShieldCheck, Sparkles, Droplet, Wind, Sun, Leaf } from "lucide-react";
+import { ShieldCheck, Sparkles, Droplet, Wind, Sun, Leaf, Info, AlertCircle } from "lucide-react";
 
 export default function Protection() {
+  const strategies = [
+    {
+      icon: <ShieldCheck className="text-emerald-400" />,
+      title: "Proven Repellents",
+      desc: "Use EPA-registered repellents containing DEET, Picaridin, or IR3535.",
+      color: "border-emerald-500/30"
+    },
+    {
+      icon: <Droplet className="text-sky-400" />,
+      title: "Water Management",
+      desc: "Drain standing water in saucers and gutters to disrupt breeding cycles.",
+      color: "border-sky-500/30"
+    },
+    {
+      icon: <Leaf className="text-green-300" />,
+      title: "Barrier Clothing",
+      desc: "Wear long sleeves and pants. Light colors are less attractive to mosquitoes.",
+      color: "border-green-500/30"
+    },
+    {
+      icon: <Wind className="text-slate-300" />,
+      title: "Air Flow",
+      desc: "Fans are effective; most biting insects are weak fliers and avoid moving air.",
+      color: "border-slate-500/30"
+    },
+    {
+      icon: <Sun className="text-yellow-400" />,
+      title: "Peak Hour Awareness",
+      desc: "Limit outdoor activity during dawn and dusk when activity spikes.",
+      color: "border-yellow-500/30"
+    },
+    {
+      icon: <Sparkles className="text-purple-300" />,
+      title: "Gear Treatment",
+      desc: "Treat hiking boots, tents, and outer layers with Permethrin spray.",
+      color: "border-purple-500/30"
+    }
+  ];
+
   return (
-    <div className="p-6 space-y-6 max-w-xl mx-auto">
-
-      <h2 className="pesky-title">Prevention & Protection</h2>
-
-      <div className="space-y-4">
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <ShieldCheck className="text-emerald-400 w-6 h-6" />
-          <p className="text-white">Use proven insect repellents.</p>
-        </div>
-
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <Droplet className="text-sky-400 w-6 h-6" />
-          <p className="text-white">Reduce standing water sources.</p>
-        </div>
-
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <Wind className="text-gray-300 w-6 h-6" />
-          <p className="text-white">Wind helps reduce biting insect activity.</p>
-        </div>
-
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <Sun className="text-yellow-400 w-6 h-6" />
-          <p className="text-white">Peak attacks occur at sunrise & sunset.</p>
-        </div>
-
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <Leaf className="text-green-300 w-6 h-6" />
-          <p className="text-white">Wear long sleeves near vegetation.</p>
-        </div>
-
-        <div className="pesky-card p-4 flex items-center gap-3">
-          <Sparkles className="text-purple-300 w-6 h-6" />
-          <p className="text-white">Use protective sprays & treatments.</p>
-        </div>
-      </div>
-
-    </div>
-  );
-}
+    <div className="min-h-screen bg-slate-950 p-6 pb-3
