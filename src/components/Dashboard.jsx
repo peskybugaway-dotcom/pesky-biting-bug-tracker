@@ -4,14 +4,14 @@ import { AlertCircle, MapPin, Shield } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="p-4 space-y-6 max-w-xl mx-auto animate-in fade-in duration-500">
-      {/* Risk Card */}
+    <div className="p-4 space-y-6 max-w-xl mx-auto">
+      {/* Main Risk Card */}
       <div className="bg-slate-900/80 border border-white/5 rounded-[2.5rem] p-6 shadow-2xl backdrop-blur-md">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h2 className="text-white font-black text-2xl tracking-tighter uppercase">Daily Risk</h2>
-            <div className="flex items-center gap-1.5 text-emerald-400 mt-1">
-              <MapPin size={10} className="fill-emerald-400/20" />
+            <h2 className="text-white font-black text-2xl tracking-tighter uppercase leading-none">Daily Risk</h2>
+            <div className="flex items-center gap-1.5 text-emerald-400 mt-2">
+              <MapPin size={10} />
               <p className="text-[10px] font-bold tracking-[0.2em] uppercase">North Port, FL</p>
             </div>
           </div>
@@ -20,7 +20,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Gauges Row */}
+        {/* Gauges */}
         <div className="flex justify-between items-end gap-1 px-2">
           <div className="flex flex-col items-center">
             <AnimatedRiskGauge value={3} />
@@ -37,19 +37,19 @@ export default function Dashboard() {
         </div>
       </div>
       
-      {/* Action Card */}
-      <div className="bg-emerald-600 rounded-[2rem] p-5 flex items-center justify-between shadow-lg shadow-emerald-900/40">
+      {/* Protection Card */}
+      <div className="bg-emerald-600 rounded-[2rem] p-5 flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-4">
           <div className="bg-white/20 p-3 rounded-2xl">
             <Shield className="text-white" size={24} />
           </div>
-          <div>
-            <h3 className="text-white font-black text-sm uppercase tracking-tight text-left">Stay Protected</h3>
-            <p className="text-emerald-100 text-[10px] font-medium opacity-90 text-left">Activity is Extreme today.</p>
+          <div className="text-left">
+            <h3 className="text-white font-black text-sm uppercase tracking-tight">Stay Protected</h3>
+            <p className="text-emerald-100 text-[10px] font-medium opacity-90">Activity is Extreme today.</p>
           </div>
         </div>
-        <button className="bg-white text-emerald-700 px-4 py-2.5 rounded-xl font-black text-[9px] tracking-widest uppercase shadow-sm">
-          REPELLENTS
+        <button className="bg-white text-emerald-700 px-4 py-2.5 rounded-xl font-black text-[9px] tracking-widest uppercase shadow-sm active:scale-95 transition-transform">
+          Repellents
         </button>
       </div>
     </div>
