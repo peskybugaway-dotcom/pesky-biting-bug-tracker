@@ -47,25 +47,29 @@ export default function BugEncyclopedia({ onSelectBug }) {
         setActive={setCategory}
       />
 
-      <div className="grid grid-cols-1 gap-4 pb-10">
-        {filtered.map((bug) => {
-          const bugWithImage = { ...bug, image: getBugImage(bug) };
+    <div className="grid grid-cols-1 gap-4 pb-10">
+  {filtered.map((bug) => {
+    // ALWAYS return full bug object + correct image
+    const bugFull = {
+      ...bug,
+      image: getBugImage(bug) ?? bug.image
+    };
 
-          return (
-            <BugCard
-              key={bug.name}
-              bug={bugWithImage}
-              onClick={() => onSelectBug(bugWithImage)} // ← FIXED HERE
-            />
-          );
-        })}
+    return (
+      <BugCard
+        key={bug.name}
+        bug={bugFull}
+        onClick={() => onSelectBug(bugFull)}  // ← ALWAYS FULL DATA
+      />
+    );
+  })}
 
-        {filtered.length === 0 && (
-          <p className="text-slate-400 text-center pt-10">
-            No matching insects found.
-          </p>
-        )}
-      </div>
+  {filtered.length === 0 && (
+    <p className="text-slate-400 text-center pt-10">
+      No matching insects found.
+    </p>
+  )}
+</div>
     </div>
   );
 }
