@@ -1,51 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Dashboard from "./components/Dashboard";
-import Guide from "./components/Guide";
-import Protection from "./components/Protection";
-import MapView from "./components/MapView";
 import BugEncyclopedia from "./components/BugEncyclopedia";
 import BugDetail from "./components/BugDetail";
-import BottomNav from "./components/BottomNav";
-import { Bug } from "lucide-react";
+// Import other tabs as you create them
+// import Dashboard from "./components/Dashboard";
 
 export default function App() {
-  const [tab, setTab] = useState("dashboard");
+  const [tab, setTab] = useState("bugs"); 
   const [selectedBug, setSelectedBug] = useState(null);
-  const [timeMode, setTimeMode] = useState("day");
 
-  // Reset selected bug when switching tabs to avoid getting "stuck" in detail view
-  const handleTabChange = (newTab) => {
-    setSelectedBug(null); 
-    setTab(newTab);
-  };
-
-  // 🌅 Theme Engine based on time of day
-  useEffect(() => {
-    const determineTimeMode = () => {
-      const hour = new Date().getHours();
-      if (hour >= 5 && hour < 8) setTimeMode("sunrise");
-      else if (hour >= 8 && hour < 17) setTimeMode("day");
-      else if (hour >= 17 && hour < 20) setTimeMode("sunset");
-      else setTimeMode("night");
-    };
-
-    determineTimeMode();
-    const timer = setInterval(determineTimeMode, 60000); // Check every minute
-    return () => clearInterval(timer);
-  }, []);
-
-  const headerStyles = {
-    sunrise: "from-orange-600 to-amber-500",
-    day: "from-emerald-700 to-sky-600",
-    sunset: "from-red-600 to-orange-600",
-    night: "from-indigo-900 to-slate-900",
-  };
-
-  // 🎛 Navigation & View Logic
+  // 1. NAVIGATION LOGIC
   const renderScreen = () => {
-    // Priority 1: Show Detailed View if a bug is clicked
+    // If a bug is selected, show Detail view.
+    // We pass setSelectedBug(null) to the onBack prop to "close" the detail.
     if (selectedBug) {
-      console.log("App.jsx is sending this bug to Detail View:", selectedBug);
       return (
         <BugDetail 
           bug={selectedBug} 
@@ -54,50 +21,63 @@ export default function App() {
       );
     }
 
-    // Priority 2: Show the current tab
+    // Otherwise, show the main tabs
     switch (tab) {
-      case "dashboard":
-        return <Dashboard onSelectBug={setSelectedBug} />;
-      case "guide":
-        return <Guide />;
-      case "protection":
-        return <Protection />;
-      case "map":
-        return <MapView />;
       case "bugs":
-        return <BugEncyclopedia onSelectBug={setSelectedBug} />;
+        return <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />;
+      case "dashboard":
+        return (
+          <div className="flex flex-col items-center justify-center h-64 text-slate-500">
+            <p>Dashboard View</p>
+          </div>
+        );
       default:
-        return <Dashboard onSelectBug={setSelectedBug} />;
+        return <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-24 selection:bg-emerald-500/30 font-sans antialiased text-slate-200">
+    <div className="min-h-screen bg-slate-950 font-sans antialiased text-slate-200">
       
-      {/* Dynamic Header */}
-      <header className={`fixed top-0 left-0 w-full z-[100] border-b border-white/10 shadow-2xl transition-colors duration-1000 bg-gradient-to-r ${headerStyles[timeMode]}`}>
-        <div className="max-w-xl mx-auto flex items-center gap-3 p-4 backdrop-blur-md">
-          <div className="bg-white/20 p-2 rounded-xl border border-white/20 shadow-inner">
-            <Bug className="text-white w-6 h-6" />
-          </div>
-          <div className="flex-1">
-            <h1 className="text-lg font-black text-white tracking-tighter uppercase leading-none">
+      {/* 2. DYNAMIC HEADER (Hide when in Detail view to save space) */}
+      {!selectedBug && (
+        <header className="fixed top-0 left-0 w-full z-[100] border-b border-white/10 bg-emerald-700 shadow-2xl">
+          <div className="max-w-xl mx-auto p-4 text-center">
+            <h1 className="text-xl font-black text-white tracking-tighter uppercase">
               PESKY<span className="font-light">®</span>
             </h1>
-            <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-1">
-              {timeMode} Identification Active
-            </p>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
-      {/* Main Viewport */}
-      <main className="pt-24 min-h-screen">
+      {/* 3. MAIN CONTENT AREA */}
+      <main className={!selectedBug ? "pt-20 pb-24" : ""}>
         {renderScreen()}
       </main>
 
-      {/* Bottom Navigation Bar */}
-      <BottomNav tab={tab} setTab={handleTabChange} />
+      {/* 4. BOTTOM NAVIGATION (Hide when in Detail view) */}
+      {!selectedBug && (
+        <nav className="fixed bottom-0 left-0 w-full bg-slate-900/90 backdrop-blur-lg border-t border-white/5 p-4 z-[100]">
+          <div className="max-w-xl mx-auto flex justify-around items-center">
+            <button 
+              onClick={() => setTab("dashboard")}
+              className={`text-[10px] font-black tracking-widest transition-colors ${
+                tab === "dashboard" ? "text-emerald-400" : "text-slate-500"
+              }`}
+            >
+              HOME
+            </button>
+            <button 
+              onClick={() => setTab("bugs")}
+              className={`text-[10px] font-black tracking-widest transition-colors ${
+                tab === "bugs" ? "text-emerald-400" : "text-slate-500"
+              }`}
+            >
+              LIBRARY
+            </button>
+          </div>
+        </nav>
+      )}
     </div>
   );
 }
