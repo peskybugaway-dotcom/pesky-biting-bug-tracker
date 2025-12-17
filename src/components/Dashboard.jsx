@@ -4,12 +4,12 @@ import { Shield, AlertCircle, MapPin } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="p-6 space-y-8 max-w-xl mx-auto pb-24">
+    <div className="p-6 space-y-8 max-w-xl mx-auto">
       {/* Risk Summary Card */}
       <div className="bg-slate-900/50 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-md">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h2 className="text-white font-black text-2xl tracking-tight">DAILY RISK</h2>
+            <h2 className="text-white font-black text-2xl tracking-tight uppercase">Daily Risk</h2>
             <div className="flex items-center gap-2 text-emerald-400">
               <MapPin size={12} />
               <p className="text-[10px] font-bold tracking-widest uppercase">North Port, FL</p>
@@ -20,21 +20,30 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* The Half-Circle Gauges Row */}
+        {/* The 3 Gauges sitting in a row */}
         <div className="flex justify-around items-end gap-2">
-          <AnimatedRiskGauge value={3} label="Mosquito" />
-          <AnimatedRiskGauge value={1} label="Tick" />
-          <AnimatedRiskGauge value={2} label="No-See-Um" />
+          <div className="text-center">
+            <AnimatedRiskGauge value={3} />
+            <p className="text-[10px] font-black text-slate-500 mt-2 uppercase tracking-tighter">Mosquito</p>
+          </div>
+          <div className="text-center">
+            <AnimatedRiskGauge value={1} />
+            <p className="text-[10px] font-black text-slate-500 mt-2 uppercase tracking-tighter">Tick</p>
+          </div>
+          <div className="text-center">
+            <AnimatedRiskGauge value={2} />
+            <p className="text-[10px] font-black text-slate-500 mt-2 uppercase tracking-tighter">No-See-Um</p>
+          </div>
         </div>
       </div>
 
-      {/* Quick Protection Action */}
-      <div className="bg-emerald-600 rounded-[2rem] p-6 flex items-center justify-between shadow-xl shadow-emerald-900/20">
+      {/* Action Card */}
+      <div className="bg-emerald-600 rounded-[2rem] p-6 flex items-center justify-between shadow-xl">
         <div className="space-y-1">
-          <h3 className="text-white font-bold text-lg">Stay Protected</h3>
-          <p className="text-emerald-100 text-xs">Mosquito activity is Extreme today.</p>
+          <h3 className="text-white font-bold text-lg leading-tight">Stay Protected</h3>
+          <p className="text-emerald-100 text-xs">Activity is Extreme today.</p>
         </div>
-        <button className="bg-white text-emerald-700 px-6 py-3 rounded-2xl font-black text-xs hover:bg-emerald-50 transition-colors">
+        <button className="bg-white text-emerald-700 px-5 py-3 rounded-2xl font-black text-[10px] tracking-widest">
           REPELLENTS
         </button>
       </div>
