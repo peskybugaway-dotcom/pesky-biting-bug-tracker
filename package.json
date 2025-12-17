@@ -1,12 +1,7 @@
 {
   "name": "pesky-biting-bug-tracker",
-  {
-  "name": "pesky-biting-bug-tracker",
   "version": "1.0.0",
-  "type": "module",  // <--- ADD THIS LINE
-  "scripts": { ... }
-}
-  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
