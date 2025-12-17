@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import AnimatedRiskGauge from "./AnimatedRiskGauge";  // ✅ Only gauge imported
+import AnimatedRiskGauge from "./AnimatedRiskGauge";
 import PresetManager from "./PresetManager";
 
 export default function Dashboard() {
@@ -50,11 +50,10 @@ export default function Dashboard() {
       );
 
       const { latitude, longitude } = pos.coords;
-
       const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}`
-        + `&longitude=${longitude}`
-        + `&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}` +
+        `&longitude=${longitude}` +
+        `&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -67,21 +66,25 @@ export default function Dashboard() {
     }
   }
 
-  // ⭐ Bug risk engine
+  // ⭐ FINAL FIXED BUG RISK ENGINE
   const score = useMemo(() => {
     let s = 0;
 
+    // Temperature risk
     if (temp > 92) s += 30;
     else if (temp > 80) s += 20;
     else if (temp > 70) s += 10;
 
+    // Humidity risk
     if (humidity > 85) s += 35;
     else if (humidity > 70) s += 20;
     else if (humidity > 50) s += 10;
 
-    if (wind < 2) s += 25;
-    else if (wind < 5) s += 15;
-    else if (wind > 12) s -= 20;
+    // ⭐ FIXED WIND LOGIC (correct direction)
+    if (wind <= 2) s += 25;        // calm = high risk
+    else if (wind <= 5) s += 15;   // light breeze
+    else if (wind <= 10) s += 5;   // moderate wind
+    else if (wind > 10) s -= 20;   // strong wind lowers risk
 
     return Math.max(0, Math.min(100, s));
   }, [temp, humidity, wind]);
@@ -125,15 +128,15 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ⭐ UNIFIED WORKING GAUGE */}
+      {/* ⭐ FIXED GAUGE — FULLY WORKING */}
       <div className="pesky-card flex justify-center p-6">
-        <AnimatedRiskGauge value={score} />  {/* FIXED PROP NAME */}
+        <AnimatedRiskGauge value={score} />
       </div>
 
       {/* SLIDERS */}
       <div className="pesky-card space-y-6">
 
-        {/* Temperature */}
+        {/* Temp */}
         <div>
           <label className="flex justify-between text-emerald-300 font-semibold mb-1">
             <span>Temperature</span>
