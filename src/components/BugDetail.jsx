@@ -1,86 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { ArrowLeft, ShieldCheck, Info, Zap, Camera, ExternalLink } from "lucide-react";
+import AnimatedRiskGauge from "./AnimatedRiskGauge";
 
-export default function AnimatedRiskGauge({ value, score }) {
-  // Accept either `score` (dashboard) OR `value` (bug detail)
-  const input = score !== undefined ? score : value !== undefined ? value : 0;
+export default function BugDetail({ bug, onBack }) {
+  const [activeTab, setActiveTab] = useState("bug"); // State to toggle between bug and bite photos
 
-  const [fill, setFill] = useState(0);
-
-  // Allow input from 0–100 (dashboard) or 0–3 (bug detail)
-  const normalized =
-    input <= 3 ? Math.round((input / 3) * 100) : Math.max(0, Math.min(100, input));
-
-  useEffect(() => {
-    const t = setTimeout(() => setFill(normalized), 150);
-    return () => clearTimeout(t);
-  }, [normalized]);
-
-  // Arc fill percent
-  const percent = fill;
-
-  // Color scale
-  const color =
-    percent < 25 ? "#10b981" :        // green
-    percent < 50 ? "#fbbf24" :        // yellow
-    percent < 75 ? "#f97316" :        // orange
-                   "#ef4444";         // red
+  if (!bug) return null;
 
   return (
-    <div className="flex flex-col items-center">
-      <svg width="180" height="100" viewBox="0 0 180 100">
-
-        {/* Background arc */}
-        <path
-          d="M10 100 A80 80 0 0 1 170 100"
-          stroke="#1f2937"
-          strokeWidth="18"
-          fill="none"
-          strokeLinecap="round"
+    <div className="min-h-screen bg-slate-950 text-slate-100 pb-20">
+      {/* 🖼 HERO IMAGE SECTION */}
+      <div className="relative h-80 w-full overflow-hidden">
+        <img
+          src={activeTab === "bug" ? bug.image : (bug.bitePhotos?.[0] || bug.image)}
+          alt={bug.name}
+          className="w-full h-full object-cover transition-all duration-500 ease-in-out"
         />
+        
+        {/* Gradient Overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
+        
+        {/* Navigation - Back Button */}
+        <button
+          onClick={onBack}
+          className="absolute top-6 left-4 p-2 bg-slate-900/80 backdrop-blur-md rounded-full border border-slate-700 z-50 hover:bg-emerald-600 transition-colors"
+        >
+          <ArrowLeft className="w-6 h-6 text-white" />
+        </button>
 
-        {/* Animated value arc */}
-        <path
-          d="M10 100 A80 80 0 0 1 170 100"
-          stroke={color}
-          strokeWidth="18"
-          fill="none"
-          strokeLinecap="round"
-          style={{
-            strokeDasharray: "250",
-            strokeDashoffset: 250 - (250 * percent) / 100,
-            transition: "stroke-dashoffset 1s ease, stroke 0.3s ease",
-          }}
-        />
+        {/* 🔄 IMAGE TOGGLE SWITCH */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex bg-slate-900/90 backdrop-blur-xl p-1 rounded-full border border-white/10 shadow-2xl z-20">
+          <button 
+            onClick={() => setActiveTab("bug")}
+            className={`px-6 py-2 rounded-full text-[10px] font-black tracking-widest transition-all ${
+              activeTab === 'bug' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            THE BUG
+          </button>
+          <button 
+            onClick={() => setActiveTab("bite")}
+            className={`px-6 py-2 rounded-full text-[10px] font-black tracking-widest transition-all ${
+              activeTab === 'bite' ? 'bg-red-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            THE BITE
+          </button>
+        </div>
+      </div>
 
-        {/* Needle */}
-        <line
-          x1="90"
-          y1="100"
-          x2={90 + 70 * Math.cos(Math.PI * (1 - percent / 100))}
-          y2={100 - 70 * Math.sin(Math.PI * (1 - percent / 100))}
-          stroke="#fff"
-          strokeWidth="4"
-          strokeLinecap="round"
-          style={{ transition: "1s ease" }}
-        />
-
-        {/* Center cap */}
-        <circle cx="90" cy="100" r="6" fill="#fff" />
-      </svg>
-
-      {/* Label */}
-      <p className="text-slate-300 text-sm mt-1">
-        Severity:{" "}
-        <span className="font-semibold" style={{ color }}>
-          {percent < 25
-            ? "Low"
-            : percent < 50
-            ? "Moderate"
-            : percent < 75
-            ? "High"
-            : "Severe"}
-        </span>
-      </p>
-    </div>
-  );
-}
+      {/* 📄 CONTENT BODY */}
+      <div className="px-6 -mt-6 relative z-30 space-y-8 max-w-xl mx-auto">
+        
+        {/* Title Block */}
+        <div className="text
