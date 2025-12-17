@@ -123,9 +123,9 @@ export default function Dashboard() {
       </div>
 
       {/* ⭐ ANIMATED RISK GAUGE */}
-      <div className="pesky-card flex justify-center p-6">
-        <AnimatedRiskGauge value={score} />
-      </div>
+<div className="pesky-card flex justify-center p-6">
+  <AnimatedRiskGauge score={score} />
+</div>
 
       {/* SLIDERS */}
       <div className="pesky-card space-y-6">
