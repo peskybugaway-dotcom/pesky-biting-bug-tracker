@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
-import AnimatedRiskGauge from "./AnimatedRiskGauge";   // ✅ Updated import
+import AnimatedRiskGauge from "./AnimatedRiskGauge";  // ✅ Only gauge imported
 import PresetManager from "./PresetManager";
-import RiskGauge from "./RiskGauge";
 
 export default function Dashboard() {
   const [temp, setTemp] = useState(82);
@@ -43,7 +42,7 @@ export default function Dashboard() {
     localStorage.setItem("pesky-presets", JSON.stringify(updated));
   }
 
-  // Get weather
+  // Fetch weather
   async function fetchWeather() {
     try {
       const pos = await new Promise((resolve, reject) =>
@@ -51,7 +50,11 @@ export default function Dashboard() {
       );
 
       const { latitude, longitude } = pos.coords;
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
+
+      const url =
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}`
+        + `&longitude=${longitude}`
+        + `&current=temperature_2m,relative_humidity_2m,wind_speed_10m`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -64,7 +67,7 @@ export default function Dashboard() {
     }
   }
 
-  // ⭐ Bug Risk Algorithm
+  // ⭐ Bug risk engine
   const score = useMemo(() => {
     let s = 0;
 
@@ -122,10 +125,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ⭐ ANIMATED RISK GAUGE */}
-<div className="pesky-card flex justify-center p-6">
-  <AnimatedRiskGauge score={score} />
-</div>
+      {/* ⭐ UNIFIED WORKING GAUGE */}
+      <div className="pesky-card flex justify-center p-6">
+        <AnimatedRiskGauge value={score} />  {/* FIXED PROP NAME */}
+      </div>
 
       {/* SLIDERS */}
       <div className="pesky-card space-y-6">
