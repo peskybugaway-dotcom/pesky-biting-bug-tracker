@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import getBugImage from "../utils/getBugImage";
-import AnimatedRiskGauge from "./AnimatedRiskGauge"; // your gauge component
+import AnimatedRiskGauge from "./AnimatedRiskGauge";
+import SeasonalRiskGauge from "./SeasonalRiskGauge"; // ✅ NEW interactive gauge
 
 export default function BugDetail({ bug, back }) {
   if (!bug) return null;
@@ -15,11 +16,13 @@ export default function BugDetail({ bug, back }) {
     seasonalActivity = {},
   } = bug;
 
-  // ✨ Convert 0–3 bug.riskLevel → proper 0–100 gauge score
+  // ⭐ Interactive seasonal month state
+  const [activeMonth, setActiveMonth] = useState("Jan");
+
+  // ⭐ Convert bug.riskLevel (0–3) → gauge score (0–100)
   const gaugeScore = Math.round((bug.riskLevel / 3) * 100);
 
   const months = Object.keys(seasonalActivity);
-  const values = Object.values(seasonalActivity);
 
   return (
     <div className="p-6 pb-24 space-y-6 max-w-xl mx-auto">
@@ -45,31 +48,37 @@ export default function BugDetail({ bug, back }) {
       <h1 className="text-2xl font-bold text-white">{name}</h1>
       <p className="text-slate-300">{description}</p>
 
-      {/* 🔥 PERFECTLY CALIBRATED GAUGE */}
+      {/* BITE SEVERITY GAUGE */}
       <div className="mt-6">
         <h3 className="text-white font-semibold mb-2">Bite Severity</h3>
         <AnimatedRiskGauge score={gaugeScore} />
       </div>
 
-      {/* SEASONAL ACTIVITY */}
-      <div>
-        <h3 className="text-white font-semibold mb-2">Seasonal Activity</h3>
-        <div className="grid grid-cols-12 gap-1 text-center">
-          {months.map((m, i) => (
-            <div key={i}>
-              <div
-                className={`
-                  h-6 rounded 
-                  ${values[i] === 0 && "bg-slate-700"}
-                  ${values[i] === 1 && "bg-green-600"}
-                  ${values[i] === 2 && "bg-yellow-500"}
-                  ${values[i] === 3 && "bg-orange-500"}
-                  ${values[i] === 4 && "bg-red-600"}
-                `}
-              ></div>
-              <span className="text-[10px] text-slate-400">{m}</span>
-            </div>
+      {/* ⭐ NEW INTERACTIVE SEASONAL ACTIVITY ⭐ */}
+      <div className="mt-8">
+        <h3 className="text-white font-semibold mb-3">Seasonal Activity</h3>
+
+        {/* Month selector */}
+        <div className="grid grid-cols-6 gap-2 mb-4">
+          {months.map((m) => (
+            <button
+              key={m}
+              onClick={() => setActiveMonth(m)}
+              className={`
+                px-2 py-1 rounded text-xs transition
+                ${activeMonth === m 
+                  ? "bg-emerald-600 text-white" 
+                  : "bg-slate-700 text-slate-300"}
+              `}
+            >
+              {m}
+            </button>
           ))}
+        </div>
+
+        {/* Interactive gauge changes when month is tapped */}
+        <div className="flex justify-center">
+          <SeasonalRiskGauge level={seasonalActivity[activeMonth]} />
         </div>
       </div>
 
@@ -96,9 +105,7 @@ export default function BugDetail({ bug, back }) {
                 src={src}
                 alt="bite example"
                 className="h-24 w-24 object-cover rounded-lg border border-slate-700 shadow-md"
-                onError={(e) =>
-                  (e.target.src = "/images/fallback-bite.png")
-                }
+                onError={(e) => (e.target.src = "/images/fallback-bite.png")}
               />
             ))}
           </div>
