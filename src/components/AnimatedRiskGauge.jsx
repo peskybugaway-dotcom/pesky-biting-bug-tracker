@@ -1,43 +1,41 @@
 import React from "react";
 
 export default function AnimatedRiskGauge({ value }) {
-  // Normalize value to 0-3 scale, then convert to 0-100 for the project's logic
+  // Logic: 0 is Low, 1 is Moderate, 2 is High, 3 is Severe
   const score = (Math.min(value, 3) / 3) * 100;
   
-  // Color mapping based on your other project's logic
-  const getColors = (v) => {
-    if (v >= 3) return { text: "text-red-400", bg: "bg-red-500" };
-    if (v >= 2) return { text: "text-orange-400", bg: "bg-orange-500" };
-    if (v >= 1) return { text: "text-yellow-400", bg: "bg-yellow-500" };
-    return { text: "text-emerald-400", bg: "bg-emerald-500" };
+  const getStyle = (v) => {
+    if (v >= 3) return { text: "text-red-500", bg: "bg-red-500", label: "Severe" };
+    if (v >= 2) return { text: "text-orange-500", bg: "bg-orange-500", label: "High" };
+    if (v >= 1) return { text: "text-yellow-400", bg: "bg-yellow-400", label: "Moderate" };
+    return { text: "text-emerald-500", bg: "bg-emerald-500", label: "Low" };
   };
 
-  const { text, bg } = getColors(value);
+  const theme = getStyle(value);
 
   return (
-    <div className="flex flex-col items-center justify-center w-24 h-16 relative mt-2">
-      {/* Visual Gauge Container */}
-      <div className="relative w-20 h-10 overflow-hidden">
-        {/* Gray Background Track */}
-        <div className="absolute w-full h-[200%] bg-slate-800 rounded-full"></div> 
+    <div className="flex flex-col items-center">
+      <div className="relative w-24 h-12 overflow-hidden">
+        {/* Background Track (The dark gray arc) */}
+        <div className="absolute w-24 h-24 border-[10px] border-slate-800 rounded-full"></div>
         
-        {/* Colored Progress (The part that moves) */}
+        {/* Progress Fill (The colored arc) */}
         <div 
-          className={`absolute w-full h-[200%] rounded-full origin-center transition-all duration-1000 ease-out ${bg}`}
+          className={`absolute w-24 h-24 border-[10px] border-t-transparent border-l-transparent rounded-full transition-all duration-1000 ease-out ${theme.bg.replace('bg-', 'border-')}`}
           style={{ 
-            transform: `rotate(${(score / 100) * 180 - 180}deg)`,
-            top: 0
+            transform: `rotate(${(score / 100) * 180 - 135}deg)`,
+            borderColor: 'transparent transparent currentColor currentColor'
           }}
         ></div>
         
-        {/* Center cutout to make it a "ring" */}
-        <div className="absolute top-2 left-2 right-2 bottom-0 bg-slate-950 rounded-t-full"></div>
+        {/* The Number in the center */}
+        <div className={`absolute bottom-0 left-0 right-0 text-center font-black text-2xl tracking-tighter ${theme.text}`}>
+          {value}
+        </div>
       </div>
-
-      {/* The Number sitting at the bottom center */}
-      <div className={`absolute bottom-0 font-black text-xl leading-none ${text}`}>
-        {value}
-      </div>
+      <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest mt-2">
+        {theme.label}
+      </span>
     </div>
   );
 }
