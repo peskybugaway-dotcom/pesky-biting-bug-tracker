@@ -13,39 +13,39 @@ export default function App() {
   const [selectedBug, setSelectedBug] = useState(null);
   const [timeMode, setTimeMode] = useState("day");
 
-  // Handle Tab changes and clear selected bug to prevent "view-locking"
+  // Reset selected bug when switching tabs to avoid getting "stuck" in detail view
   const handleTabChange = (newTab) => {
     setSelectedBug(null); 
     setTab(newTab);
   };
 
-  // 🌅 Time of day logic for dynamic theme
+  // 🌅 Theme Engine based on time of day
   useEffect(() => {
-    function determineTimeMode() {
+    const determineTimeMode = () => {
       const hour = new Date().getHours();
       if (hour >= 5 && hour < 8) setTimeMode("sunrise");
       else if (hour >= 8 && hour < 17) setTimeMode("day");
       else if (hour >= 17 && hour < 20) setTimeMode("sunset");
       else setTimeMode("night");
-    }
+    };
 
     determineTimeMode();
-    const timer = setInterval(determineTimeMode, 300000); // Update every 5 mins
+    const timer = setInterval(determineTimeMode, 60000); // Check every minute
     return () => clearInterval(timer);
   }, []);
 
-  // 🎨 Header gradients based on timeMode
   const headerStyles = {
-    sunrise: "from-orange-600 to-amber-500 border-amber-400",
-    day: "from-emerald-700 to-sky-600 border-emerald-500",
-    sunset: "from-red-600 to-orange-600 border-red-500",
-    night: "from-indigo-900 to-slate-900 border-indigo-400",
+    sunrise: "from-orange-600 to-amber-500",
+    day: "from-emerald-700 to-sky-600",
+    sunset: "from-red-600 to-orange-600",
+    night: "from-indigo-900 to-slate-900",
   };
 
-  // 🎛 Main Routing Logic
+  // 🎛 Navigation & View Logic
   const renderScreen = () => {
-    // 1. If a bug is clicked, show Detail View regardless of current tab
+    // Priority 1: Show Detailed View if a bug is clicked
     if (selectedBug) {
+      console.log("App.jsx is sending this bug to Detail View:", selectedBug);
       return (
         <BugDetail 
           bug={selectedBug} 
@@ -54,7 +54,7 @@ export default function App() {
       );
     }
 
-    // 2. Otherwise, show the active tab
+    // Priority 2: Show the current tab
     switch (tab) {
       case "dashboard":
         return <Dashboard onSelectBug={setSelectedBug} />;
@@ -72,12 +72,32 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-24 selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-slate-950 pb-24 selection:bg-emerald-500/30 font-sans antialiased text-slate-200">
       
-      {/* Header */}
-      <header
-        className={`
-          fixed top-0 left-0 w-full 
-          backdrop-blur-xl shadow-2xl z-[100]
-          bg-gradient-to-r ${headerStyles[timeMode]}
-          border-b border
+      {/* Dynamic Header */}
+      <header className={`fixed top-0 left-0 w-full z-[100] border-b border-white/10 shadow-2xl transition-colors duration-1000 bg-gradient-to-r ${headerStyles[timeMode]}`}>
+        <div className="max-w-xl mx-auto flex items-center gap-3 p-4 backdrop-blur-md">
+          <div className="bg-white/20 p-2 rounded-xl border border-white/20 shadow-inner">
+            <Bug className="text-white w-6 h-6" />
+          </div>
+          <div className="flex-1">
+            <h1 className="text-lg font-black text-white tracking-tighter uppercase leading-none">
+              PESKY<span className="font-light">®</span>
+            </h1>
+            <p className="text-[10px] font-bold text-white/70 uppercase tracking-[0.2em] mt-1">
+              {timeMode} Identification Active
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Viewport */}
+      <main className="pt-24 min-h-screen">
+        {renderScreen()}
+      </main>
+
+      {/* Bottom Navigation Bar */}
+      <BottomNav tab={tab} setTab={handleTabChange} />
+    </div>
+  );
+}
