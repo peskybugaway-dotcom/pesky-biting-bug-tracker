@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       {!selectedBug && (
-        <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl">
+        <header className="fixed top-0 left-0 w-full z-[100] bg-blue-600 p-4 shadow-xl">
           <h1 className="text-white font-black text-center text-xl tracking-tighter uppercase">PESKY®</h1>
         </header>
       )}
