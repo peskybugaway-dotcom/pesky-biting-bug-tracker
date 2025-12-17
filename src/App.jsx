@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       {!selectedBug && (
-        <header className="fixed top-0 left-0 w-full z-[100] bg-blue-600 p-4 shadow-xl">
+        <header className="fixed top-0 left-0 w-full z-[100] bg-emerald-700 p-4 shadow-xl">
           <h1 className="text-white font-black text-center text-xl tracking-tighter uppercase">PESKY®</h1>
         </header>
       )}
@@ -20,12 +20,12 @@ export default function App() {
         {selectedBug ? (
           <BugDetail bug={selectedBug} onBack={() => setSelectedBug(null)} />
         ) : (
-          <div className="animate-in fade-in duration-300">
+          <div className="animate-in fade-in duration-500">
             {tab === "dashboard" && <Dashboard />}
             {tab === "bugs" && <BugEncyclopedia onSelectBug={(bug) => setSelectedBug(bug)} />}
-            {tab === "map" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Map Soon</div>}
-            {tab === "protection" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Shield Soon</div>}
-            {tab === "guide" && <div className="p-10 text-center text-slate-500 uppercase font-black text-[10px] tracking-widest">Guide Soon</div>}
+            {tab === "map" && <div className="p-20 text-center text-slate-500 font-bold uppercase text-[10px] tracking-widest">Map Section Coming Soon</div>}
+            {tab === "protection" && <div className="p-20 text-center text-slate-500 font-bold uppercase text-[10px] tracking-widest">Shield Section Coming Soon</div>}
+            {tab === "guide" && <div className="p-20 text-center text-slate-500 font-bold uppercase text-[10px] tracking-widest">Guide Section Coming Soon</div>}
           </div>
         )}
       </main>
