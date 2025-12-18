@@ -1,37 +1,57 @@
-import React from "react";
+import React from 'react';
 
-export default function AnimatedRiskGauge({ value }) {
-  // Map 0-3 to rotation: 0 = -90deg, 3 = 90deg
+const AnimatedRiskGauge = ({ value = 0 }) => {
+  // Logic to calculate needle rotation
+  // 0 is far left (-90deg), 3 is far right (90deg)
   const rotation = (value / 3) * 180 - 90;
-  
-  const colors = {
-    3: "border-red-500 text-red-500",
-    2: "border-orange-500 text-orange-500",
-    1: "border-yellow-400 text-yellow-400",
-    0: "border-emerald-500 text-emerald-500"
+
+  const getColor = (v) => {
+    if (v >= 3) return '#ef4444'; // Red
+    if (v >= 2) return '#f97316'; // Orange
+    if (v >= 1) return '#facc15'; // Yellow
+    return '#10b981';            // Emerald
   };
 
-  const colorClass = colors[value] || colors[0];
-
   return (
-    <div className="flex flex-col items-center justify-center p-2">
-      <div className="relative w-20 h-10 overflow-hidden">
-        {/* Background Track */}
-        <div className="absolute top-0 left-0 w-20 h-20 border-[8px] border-slate-800 rounded-full" />
-        
-        {/* Active Progress Arc */}
-        <div 
-          className={`absolute top-0 left-0 w-20 h-20 border-[8px] rounded-full transition-transform duration-1000 ${colorClass}`}
-          style={{ 
-            transform: `rotate(${rotation}deg)`,
-            borderBottomColor: 'transparent',
-            borderLeftColor: 'transparent'
-          }}
+    <div className="relative flex flex-col items-center">
+      <svg width="160" height="100" viewBox="0 0 160 100">
+        {/* Background Track (The gray arc) */}
+        <path
+          d="M 20 80 A 60 60 0 0 1 140 80"
+          fill="none"
+          stroke="#1e293b"
+          strokeWidth="12"
+          strokeLinecap="round"
         />
-      </div>
-      <div className={`mt-1 font-black text-xl ${colorClass.split(' ')[1]}`}>
+        {/* Colored Progress Track */}
+        <path
+          d="M 20 80 A 60 60 0 0 1 140 80"
+          fill="none"
+          stroke={getColor(value)}
+          strokeWidth="12"
+          strokeLinecap="round"
+          strokeDasharray="188.5"
+          strokeDashoffset={188.5 - (value / 3) * 188.5}
+          className="transition-all duration-1000 ease-out"
+        />
+        {/* The Needle */}
+        <g transform={`rotate(${rotation}, 80, 80)`}>
+          <line
+            x1="80" y1="80" x2="80" y2="30"
+            stroke="white"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <circle cx="80" cy="80" r="5" fill="white" />
+        </g>
+      </svg>
+      
+      {/* Big Number in the middle */}
+      <div className="absolute top-12 text-3xl font-black text-white">
         {value}
       </div>
     </div>
   );
-}
+};
+
+export default AnimatedRiskGauge;
