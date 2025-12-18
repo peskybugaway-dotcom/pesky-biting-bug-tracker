@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
-  Bug, 
-  Wind, 
-  Thermometer, 
-  Droplets, 
-  Sun, 
-  AlertTriangle, 
-  Shield, 
-  Info,
-  MapPin,
-  Clock,
+import {
+  Bug,
   Save,
   Loader2,
   Trash2,
@@ -18,15 +9,6 @@ import {
   Download,
   Map
 } from 'lucide-react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, deleteDoc, query } from 'firebase/firestore';
-
-// --- FIREBASE CONFIGURATION & INITIALIZATION ---
-// NOTE: If you don't have these variables set up in Vercel yet, the app will use 'default-app-id'
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null; 
-const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
 // --- REUSABLE UI COMPONENTS ---
 
@@ -178,9 +160,9 @@ const BugGuide = ({ riskLevel }) => (
         <div className="p-4 bg-slate-900/50 rounded-lg">
             <h3 className="font-bold text-white mb-2">Current Risk: {riskLevel}</h3>
             <ul className="text-xs space-y-2 text-slate-400">
-                <li>• Temp > 65°F: Increased Breeding</li>
-                <li>• Humidity > 70%: Ideal Survival</li>
-                <li>• Wind < 5mph: Peak Activity</li>
+                <li>• Temp &gt; 65°F: Increased Breeding</li>
+                <li>• Humidity &gt; 70%: Ideal Survival</li>
+                <li>• Wind &lt; 5mph: Peak Activity</li>
             </ul>
         </div>
     </Card>
@@ -205,30 +187,69 @@ const ProtectionTips = () => (
 // --- MAIN APPLICATION COMPONENT ---
 
 export default function App() {
-  const [temp, setTemp] = useState(82); 
-  const [humidity, setHumidity] = useState(75); 
-  const [windSpeed, setWindSpeed] = useState(3); 
-  const [timeOfDay, setTimeOfDay] = useState(19); 
+  const [temp, setTemp] = useState(82);
+  const [humidity, setHumidity] = useState(75);
+  const [windSpeed, setWindSpeed] = useState(3);
+  const [timeOfDay, setTimeOfDay] = useState(19);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [db, setDb] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [isAuthReady, setIsAuthReady] = useState(false);
   const [presets, setPresets] = useState([]);
   const [presetName, setPresetName] = useState('');
   const [showPresetManager, setShowPresetManager] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoadingPresets, setIsLoadingPresets] = useState(true);
+
+  const storageKey = 'pesky-bug-presets';
 
   useEffect(() => {
-    if (firebaseConfig) {
-      const app = initializeApp(firebaseConfig);
-      const firestore = getFirestore(app);
-      const auth = getAuth(app);
-      setDb(firestore);
-      signInAnonymously(auth).then(() => {
-          setUserId(auth.currentUser.uid);
-          setIsAuthReady(true);
-      });
+    if (typeof window === 'undefined') return;
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        setPresets(JSON.parse(stored));
+      }
+    } catch (err) {
+      console.error('Failed to load presets', err);
+    } finally {
+      setIsLoadingPresets(false);
     }
   }, []);
+
+  const persistPresets = (nextPresets) => {
+    setPresets(nextPresets);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(storageKey, JSON.stringify(nextPresets));
+    }
+  };
+
+  const handleSavePreset = () => {
+    if (!presetName.trim()) return;
+    setIsSaving(true);
+    const newPreset = {
+      id: crypto.randomUUID(),
+      name: presetName.trim(),
+      temp: Number(temp),
+      humidity: Number(humidity),
+      windSpeed: Number(windSpeed)
+    };
+
+    const nextPresets = [...presets, newPreset];
+    persistPresets(nextPresets);
+    setPresetName('');
+    setIsSaving(false);
+  };
+
+  const handleLoadPreset = (preset) => {
+    setTemp(preset.temp);
+    setHumidity(preset.humidity);
+    setWindSpeed(preset.windSpeed);
+    setShowPresetManager(false);
+  };
+
+  const handleDeletePreset = (event, presetId) => {
+    event.stopPropagation();
+    const filtered = presets.filter((preset) => preset.id !== presetId);
+    persistPresets(filtered);
+  };
 
   const riskAnalysis = useMemo(() => {
       let score = (temp > 70 ? 40 : 10) + (humidity > 60 ? 30 : 5) - (windSpeed * 2);
@@ -243,7 +264,19 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-950 to-teal-950 text-slate-100 p-4 md:p-8">
       <div className="max-w-4xl mx-auto space-y-6">
         
-        {showPresetManager && <PresetManager presets={presets} presetName={presetName} setPresetName={setPresetName} setShowPresetManager={setShowPresetManager} />}
+        {showPresetManager && (
+          <PresetManager
+            presets={presets}
+            presetName={presetName}
+            setPresetName={setPresetName}
+            handleSavePreset={handleSavePreset}
+            handleLoadPreset={handleLoadPreset}
+            handleDeletePreset={handleDeletePreset}
+            isSaving={isSaving}
+            isLoadingPresets={isLoadingPresets}
+            setShowPresetManager={setShowPresetManager}
+          />
+        )}
 
         <header className="flex justify-between items-center border-b border-emerald-800 pb-4">
           <h1 className="text-2xl font-bold flex items-center gap-2"><Bug className="text-emerald-400" /> PESKY Tracker</h1>
@@ -269,14 +302,14 @@ export default function App() {
             <Card className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-4">
                     <label className="flex justify-between text-sm"><span>Temperature</span> <span>{temp}°F</span></label>
-                    <input type="range" min="40" max="110" value={temp} onChange={(e) => setTemp(e.target.value)} className="w-full accent-emerald-500" />
+                    <input type="range" min="40" max="110" value={temp} onChange={(e) => setTemp(Number(e.target.value))} className="w-full accent-emerald-500" />
                     
                     <label className="flex justify-between text-sm"><span>Humidity</span> <span>{humidity}%</span></label>
-                    <input type="range" min="0" max="100" value={humidity} onChange={(e) => setHumidity(e.target.value)} className="w-full accent-emerald-500" />
+                    <input type="range" min="0" max="100" value={humidity} onChange={(e) => setHumidity(Number(e.target.value))} className="w-full accent-emerald-500" />
                 </div>
                 <div className="space-y-4">
                     <label className="flex justify-between text-sm"><span>Wind Speed</span> <span>{windSpeed} mph</span></label>
-                    <input type="range" min="0" max="30" value={windSpeed} onChange={(e) => setWindSpeed(e.target.value)} className="w-full accent-emerald-500" />
+                    <input type="range" min="0" max="30" value={windSpeed} onChange={(e) => setWindSpeed(Number(e.target.value))} className="w-full accent-emerald-500" />
                 </div>
             </Card>
           </div>
