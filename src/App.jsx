@@ -1,6 +1,3 @@
-+76
--43
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Bug, 
