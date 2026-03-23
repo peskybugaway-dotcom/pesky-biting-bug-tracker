@@ -1,33 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
 
-/* GLOBAL BRAND BACKGROUND */
-body {
-  @apply bg-slate-900 text-white;
-  background: radial-gradient(circle at 30% 20%, rgba(16,185,129,0.15), transparent 70%),
-              radial-gradient(circle at 80% 80%, rgba(45,212,191,0.15), transparent 70%),
-              #0f172a;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-family: ui-sans-serif, system-ui, -apple-system;
+/* Tactical Range Sliders */
+input[type=range] { 
+    -webkit-appearance: none; 
+    width: 100%; 
+    background: transparent; 
 }
 
-/* PREMIUM CARD STYLE */
-.pesky-card {
-  @apply bg-slate-800/70 border border-slate-700 rounded-xl shadow-xl p-4 backdrop-blur-sm;
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; 
+  height: 20px; 
+  width: 20px; 
+  border-radius: 50%;
+  background: #ef4444; 
+  margin-top: -7px; 
+  border: 2px solid #fff;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
 }
 
-/* PREMIUM SECTION TITLE */
-.pesky-title {
-  @apply text-2xl font-bold text-emerald-400 tracking-tight;
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%; 
+  height: 6px; 
+  background: #1e293b; 
+  border-radius: 3px;
 }
 
-/* GLOW BUTTON */
-.pesky-btn {
-  @apply px-4 py-2 rounded-full text-white font-semibold shadow-lg transition;
-  background: linear-gradient(90deg, #10b981, #059669);
+.scanline {
+    background: linear-gradient(to bottom, rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%),
+                linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+    background-size: 100% 2px, 3px 100%;
 }
-.pesky-btn:hover {
-  filter: brightness(1.15);
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
 }
